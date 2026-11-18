@@ -535,9 +535,9 @@
                     <div class="bg-white p-2.5 rounded-xl border border-arena/70 text-center">
                       <span class="block text-[11px] font-semibold text-carbon">Adultos</span>
                       <span class="block text-[9px] text-carbon/60 mb-1.5">$60 c/u</span>
-                      <div class="flex items-center justify-center gap-2">
+                      <div class="flex items-center justify-center gap-1.5">
                         <button type="button" id="btn-dec-adults" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">-</button>
-                        <span id="counter-adults" class="font-bold text-xs text-carbon w-4">1</span>
+                        <input type="number" id="input-adults" min="0" max="99" value="1" class="w-10 text-center font-bold text-xs text-carbon bg-marfilSoft border border-arena/60 rounded py-0.5 focus:outline-none focus:border-vino">
                         <button type="button" id="btn-inc-adults" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">+</button>
                       </div>
                     </div>
@@ -546,9 +546,9 @@
                     <div class="bg-white p-2.5 rounded-xl border border-arena/70 text-center">
                       <span class="block text-[11px] font-semibold text-carbon">Estudiantes</span>
                       <span class="block text-[9px] text-carbon/60 mb-1.5">$30 c/u</span>
-                      <div class="flex items-center justify-center gap-2">
+                      <div class="flex items-center justify-center gap-1.5">
                         <button type="button" id="btn-dec-students" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">-</button>
-                        <span id="counter-students" class="font-bold text-xs text-carbon w-4">0</span>
+                        <input type="number" id="input-students" min="0" max="99" value="0" class="w-10 text-center font-bold text-xs text-carbon bg-marfilSoft border border-arena/60 rounded py-0.5 focus:outline-none focus:border-vino">
                         <button type="button" id="btn-inc-students" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">+</button>
                       </div>
                     </div>
@@ -557,9 +557,9 @@
                     <div class="bg-white p-2.5 rounded-xl border border-arena/70 text-center">
                       <span class="block text-[11px] font-semibold text-carbon">Niños (-12)</span>
                       <span class="block text-[9px] text-carbon/60 mb-1.5">$30 c/u</span>
-                      <div class="flex items-center justify-center gap-2">
+                      <div class="flex items-center justify-center gap-1.5">
                         <button type="button" id="btn-dec-kids" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">-</button>
-                        <span id="counter-kids" class="font-bold text-xs text-carbon w-4">0</span>
+                        <input type="number" id="input-kids" min="0" max="99" value="0" class="w-10 text-center font-bold text-xs text-carbon bg-marfilSoft border border-arena/60 rounded py-0.5 focus:outline-none focus:border-vino">
                         <button type="button" id="btn-inc-kids" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">+</button>
                       </div>
                     </div>
@@ -1277,59 +1277,89 @@
         }
       }
 
-      // 3. Detección Inteligente de Experiencias Contextuales
-      // Regla: No cobrar solo por interés; cobrar cuando forma parte del itinerario real
+      // 3. Detección Inteligente de Experiencias Contextuales según intereses seleccionados
       const hasInteractive = interests.includes('talleres');
-      const hasArt = interests.includes('arte');
+      const hasCafe = interests.includes('cafe');
+      const hasArchitecture = interests.includes('arquitectura');
       const isExtended = duration === '3';
       const isMedium = duration === '2';
 
-      // A) Con amigos + 2h o 3h + interés en interactivos -> Recorrido Interactivo Digital ($40/pers)
-      if (group === 'amigos' && hasInteractive && (isMedium || isExtended)) {
-        const cost = totalVisitors * PRICE_CATALOG.experiences.digital_interactive.price;
+      // A) Interés en Actividades Interactivas:
+      // Si son amigos o adultos interesados en interactivos -> Recorrido interactivo digital ($40/pers)
+      if (hasInteractive) {
+        if (visitors.kids > 0) {
+          // Familia con niños: Actividades Arocena Kids ($120/niño)
+          const costKids = visitors.kids * PRICE_CATALOG.experiences.kids_activities.price;
+          lineItems.push({
+            id: PRICE_CATALOG.experiences.kids_activities.id,
+            name: `${PRICE_CATALOG.experiences.kids_activities.name} (${visitors.kids} niño${visitors.kids > 1 ? 's' : ''})`,
+            unitPrice: PRICE_CATALOG.experiences.kids_activities.price,
+            quantity: visitors.kids,
+            total: costKids,
+            isOfficial: false,
+            category: 'Experiencias'
+          });
+          totalAmount += costKids;
+        } else if (isExtended && (group === 'pareja' || group === 'solo')) {
+          // Experiencia extendida en pareja/solo: Taller creativo ($180/part)
+          const participants = totalVisitors;
+          const cost = participants * PRICE_CATALOG.experiences.creative_workshop.price;
+          lineItems.push({
+            id: PRICE_CATALOG.experiences.creative_workshop.id,
+            name: `${PRICE_CATALOG.experiences.creative_workshop.name} (${participants} part.)`,
+            unitPrice: PRICE_CATALOG.experiences.creative_workshop.price,
+            quantity: participants,
+            total: cost,
+            isOfficial: false,
+            category: 'Experiencias'
+          });
+          totalAmount += cost;
+        } else {
+          // Recorrido interactivo digital ($40/persona)
+          const cost = totalVisitors * PRICE_CATALOG.experiences.digital_interactive.price;
+          lineItems.push({
+            id: PRICE_CATALOG.experiences.digital_interactive.id,
+            name: `${PRICE_CATALOG.experiences.digital_interactive.name} (${totalVisitors} pers.)`,
+            unitPrice: PRICE_CATALOG.experiences.digital_interactive.price,
+            quantity: totalVisitors,
+            total: cost,
+            isOfficial: false,
+            category: 'Experiencias'
+          });
+          totalAmount += cost;
+        }
+      }
+
+      // B) Interés en Historia y Arquitectura en visita extendida (+3 horas):
+      // Incluye Visita Guiada Arquitectónica al Edificio Histórico ($150 por reservación grupal)
+      if (hasArchitecture && isExtended) {
+        const guideCost = PRICE_CATALOG.guided_services.general_guided.price;
         lineItems.push({
-          id: PRICE_CATALOG.experiences.digital_interactive.id,
-          name: `${PRICE_CATALOG.experiences.digital_interactive.name} (${totalVisitors} pers.)`,
-          unitPrice: PRICE_CATALOG.experiences.digital_interactive.price,
+          id: PRICE_CATALOG.guided_services.general_guided.id,
+          name: `${PRICE_CATALOG.guided_services.general_guided.name} (Por grupo)`,
+          unitPrice: guideCost,
+          quantity: 1,
+          total: guideCost,
+          isOfficial: false,
+          category: 'Servicios Guiados'
+        });
+        totalAmount += guideCost;
+      }
+
+      // C) Interés en Café & Terraza en visita extendida (+3 horas):
+      // Incluye Degustación / Combo Cafetería Arocena ($95 por persona)
+      if (hasCafe && isExtended) {
+        const cafeCost = totalVisitors * PRICE_CATALOG.complements.cafe_combo.price;
+        lineItems.push({
+          id: PRICE_CATALOG.complements.cafe_combo.id,
+          name: `${PRICE_CATALOG.complements.cafe_combo.name} (${totalVisitors} consumos)`,
+          unitPrice: PRICE_CATALOG.complements.cafe_combo.price,
           quantity: totalVisitors,
-          total: cost,
+          total: cafeCost,
           isOfficial: false,
-          category: 'Experiencias'
+          category: 'Complementos'
         });
-        totalAmount += cost;
-      }
-
-      // B) En pareja + 3h + arte + interactivos -> Taller creativo Arocena Creative ($180/participante)
-      // O solo 3h con interactivos
-      if ((group === 'pareja' || group === 'solo') && hasInteractive && isExtended) {
-        const participants = group === 'pareja' ? 2 : 1;
-        const cost = participants * PRICE_CATALOG.experiences.creative_workshop.price;
-        lineItems.push({
-          id: PRICE_CATALOG.experiences.creative_workshop.id,
-          name: `${PRICE_CATALOG.experiences.creative_workshop.name} (${participants} part.)`,
-          unitPrice: PRICE_CATALOG.experiences.creative_workshop.price,
-          quantity: participants,
-          total: cost,
-          isOfficial: false,
-          category: 'Experiencias'
-        });
-        totalAmount += cost;
-      }
-
-      // C) Familia + actividades interactivas -> Actividades Arocena Kids ($120/niño)
-      // Se cobra ÚNICAMENTE a los niños, no a los adultos
-      if (group === 'familia' && hasInteractive && visitors.kids > 0) {
-        const cost = visitors.kids * PRICE_CATALOG.experiences.kids_activities.price;
-        lineItems.push({
-          id: PRICE_CATALOG.experiences.kids_activities.id,
-          name: `${PRICE_CATALOG.experiences.kids_activities.name} (${visitors.kids} niño${visitors.kids > 1 ? 's' : ''})`,
-          unitPrice: PRICE_CATALOG.experiences.kids_activities.price,
-          quantity: visitors.kids,
-          total: cost,
-          isOfficial: false,
-          category: 'Experiencias'
-        });
-        totalAmount += cost;
+        totalAmount += cafeCost;
       }
 
       // 4. Cálculo final por persona y validación
@@ -1477,12 +1507,19 @@
     // 6. EVENTOS DE INTERFAZ Y AJUSTE DE CONTADORES
     // ==========================================
     function syncCountersUI() {
-      document.getElementById('counter-adults').innerText = state.counts.adults;
-      document.getElementById('counter-students').innerText = state.counts.students;
-      document.getElementById('counter-kids').innerText = state.counts.kids;
+      const inputAdults = document.getElementById('input-adults');
+      const inputStudents = document.getElementById('input-students');
+      const inputKids = document.getElementById('input-kids');
+
+      if (inputAdults) inputAdults.value = state.counts.adults;
+      if (inputStudents) inputStudents.value = state.counts.students;
+      if (inputKids) inputKids.value = state.counts.kids;
 
       const total = state.counts.adults + state.counts.students + state.counts.kids;
-      document.getElementById('visitors-total-counter').innerText = `${total} ${total === 1 ? 'persona' : 'personas'}`;
+      const counterLabel = document.getElementById('visitors-total-counter');
+      if (counterLabel) {
+        counterLabel.innerText = `${total} ${total === 1 ? 'persona' : 'personas'}`;
+      }
     }
 
     // Botones de incremento / decremento
@@ -1523,6 +1560,38 @@
         syncCountersUI();
         updateItineraryView();
       }
+    });
+
+    // Edición manual en inputs numéricos
+    ['input-adults', 'input-students', 'input-kids'].forEach(id => {
+      const input = document.getElementById(id);
+      input.addEventListener('change', () => {
+        let val = parseInt(input.value, 10);
+        if (isNaN(val) || val < 0) val = 0;
+        
+        if (id === 'input-adults') state.counts.adults = val;
+        if (id === 'input-students') state.counts.students = val;
+        if (id === 'input-kids') state.counts.kids = val;
+
+        // Asegurar al menos 1 visitante en total
+        if ((state.counts.adults + state.counts.students + state.counts.kids) === 0) {
+          state.counts.adults = 1;
+        }
+
+        syncCountersUI();
+        updateItineraryView();
+      });
+
+      input.addEventListener('input', () => {
+        let val = parseInt(input.value, 10);
+        if (!isNaN(val) && val >= 0) {
+          if (id === 'input-adults') state.counts.adults = val;
+          if (id === 'input-students') state.counts.students = val;
+          if (id === 'input-kids') state.counts.kids = val;
+          syncCountersUI();
+          updateItineraryView();
+        }
+      });
     });
 
     // Selector de Grupo (Pre-configura contadores típicos que el usuario puede ajustar libremente)
