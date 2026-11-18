@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIVE AROCENA — El arte se vive, no solamente se observa</title>
+  <meta name="description" content="Descubre el Museo Arocena: exposiciones, arquitectura, actividades culturales, recorridos e itinerarios personalizados en Torreón.">
+
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marfil: '#F5F0E8',
+            marfilSoft: '#FAF7F2',
+            vino: '#722F3B',
+            vinoDark: '#561F29',
+            vinoLight: '#8C3B4A',
+            terracota: '#B87856',
+            terracotaLight: '#D49675',
+            carbon: '#252525',
+            carbonLight: '#3D3D3D',
+            arena: '#D9CDBB',
+            arenaDark: '#C7B9A3',
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5F0E8;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D9CDBB;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #722F3B;
+    }
+
+    .editorial-shadow {
+      box-shadow: 0 16px 40px -12px rgba(37, 37, 37, 0.12);
+    }
+    .hero-gradient {
+      background: linear-gradient(180deg, rgba(37,37,37,0.2) 0%, rgba(37,37,37,0.75) 100%);
+    }
+  </style>
+</head>
+<body class="bg-marfil text-carbon font-sans antialiased selection:bg-vino selection:text-white min-h-screen flex flex-col">
+
+  <!-- TOP ANNOUNCEMENT BAR (The Met inspiration) -->
+  <aside aria-label="Aviso institucional" class="bg-carbon text-marfil text-xs py-2 px-4 border-b border-carbonLight">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-medium tracking-wide">Abierto hoy: Martes a Domingo de 10:00 a 18:00 hrs</span>
+        <span class="hidden md:inline text-arena">|</span>
+        <span class="hidden md:inline text-arena/80">Domingos entrada libre</span>
+      </div>
+      <div class="flex items-center gap-4 text-arena">
+        <a href="#contacto" class="hover:text-white transition-colors">Cómo llegar</a>
+        <span>•</span>
+        <a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a>
+        <span>•</span>
+        <span class="text-white font-semibold">ES</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="sticky top-0 z-50 bg-marfil/95 backdrop-blur-md border-b border-arena transition-all duration-300 shadow-sm" id="main-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo Brand -->
+      <a href="#" class="flex flex-col group">
+        <span class="font-serif text-2xl sm:text-3xl font-bold tracking-widest text-vino group-hover:text-vinoDark transition-colors">
+          VIVE AROCENA
+        </span>
+        <span class="text-[10px] uppercase tracking-[0.25em] text-carbon/70 -mt-1">
+          Museo Arocena • Torreón
+        </span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center space-x-7 text-sm font-medium text-carbonLight">
+        <a href="#descubre" class="hover:text-vino transition-colors py-1">Descubre Arocena</a>
+        <a href="#exposiciones" class="hover:text-vino transition-colors py-1">Exposiciones</a>
+        <a href="#experiencias" class="hover:text-vino transition-colors py-1">Experiencias</a>
+        <a href="#planeador" class="hover:text-vino transition-colors py-1">Planea tu Visita</a>
+        <a href="#kids" class="text-terracota hover:text-vino transition-colors flex items-center gap-1 font-semibold py-1">
+          <span>Arocena Kids</span>
+          <span class="text-[10px] bg-terracota/15 px-1.5 py-0.5 rounded text-terracota uppercase tracking-wider">Nuevo</span>
+        </a>
+        <a href="#contacto" class="hover:text-vino transition-colors py-1">Horarios y Costos</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="hidden sm:flex items-center gap-3">
+        <a href="#planeador" class="inline-flex items-center gap-2 bg-vino hover:bg-vinoDark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-200 transform hover:-translate-y-0.5 shadow-md hover:shadow-lg">
+          <i data-lucide="compass" class="w-4 h-4"></i>
+          <span>Planear Visita</span>
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-btn" type="button" aria-label="Abrir menú" class="lg:hidden p-2 rounded-lg text-carbon hover:bg-arena/40 focus:outline-none">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-marfilSoft border-b border-arena px-6 py-5 space-y-4 shadow-xl">
+      <nav class="flex flex-col space-y-3 text-base font-medium">
+        <a href="#descubre" class="mobile-nav-link text-carbon hover:text-vino">Descubre Arocena</a>
+        <a href="#exposiciones" class="mobile-nav-link text-carbon hover:text-vino">Exposiciones & Eventos</a>
+        <a href="#experiencias" class="mobile-nav-link text-carbon hover:text-vino">Experiencias Interactivas</a>
+        <a href="#planeador" class="mobile-nav-link text-carbon hover:text-vino">Planea tu Visita</a>
+        <a href="#kids" class="mobile-nav-link text-terracota font-semibold flex items-center justify-between">
+          <span>Arocena Kids</span>
+          <span class="text-xs bg-terracota/20 px-2 py-0.5 rounded">Familiar</span>
+        </a>
+        <a href="#contacto" class="mobile-nav-link text-carbon hover:text-vino">Información, Horarios y Boletos</a>
+      </nav>
+      <div class="pt-2 border-t border-arena">
+        <a href="#planeador" class="mobile-nav-link w-full flex items-center justify-center gap-2 bg-vino text-white py-3 rounded-lg font-semibold shadow">
+          <i data-lucide="compass" class="w-4 h-4"></i>
+          <span>Generar mi Itinerario</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    
+    <!-- 1. HERO SECTION -->
+    <section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden bg-carbon text-white">
+      <!-- Background Image with Overlay -->
+      <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=2000&q=80" 
+           alt="Salas de arte y arquitectura histórica" 
+           class="absolute inset-0 w-full h-full object-cover object-center opacity-45 transform scale-105 transition-transform duration-1000 ease-out" id="hero-bg">
+      <div class="absolute inset-0 hero-gradient"></div>
+
+      <!-- Hero Content -->
+      <div class="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+        
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-marfil text-xs uppercase tracking-widest font-medium mb-6">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-terracotaLight"></i>
+          <span>Una nueva dimensión cultural en La Laguna</span>
+        </div>
+
+        <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-[1.1] mb-6">
+          El arte se vive, <br class="hidden sm:inline">
+          <span class="italic font-normal text-arena">no solamente se observa.</span>
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-lg sm:text-xl text-marfil/90 font-light leading-relaxed mb-10">
+          Descubre un punto de encuentro vivo donde la historia colonial, el arte contemporáneo, la gastronomía y las actividades inmersivas se unen en el corazón de Torreón.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5">
+          <a href="#planeador" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-vino hover:bg-vinoLight text-white text-base font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-xl hover:shadow-vino/30 transform hover:-translate-y-0.5">
+            <i data-lucide="calendar-check" class="w-5 h-5"></i>
+            <span>Planea tu visita</span>
+          </a>
+          <a href="#experiencias" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white text-base font-semibold px-8 py-4 rounded-full transition-all duration-300">
+            <i data-lucide="eye" class="w-5 h-5"></i>
+            <span>Descubre las experiencias</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Scroll Indicator -->
+      <a href="#logistica-rapida" class="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white/70 hover:text-white flex flex-col items-center gap-1 text-xs tracking-wider transition-colors">
+        <span>EXPLORAR</span>
+        <i data-lucide="chevron-down" class="w-4 h-4 animate-bounce"></i>
+      </a>
+    </section>
+
+    <!-- 2. QUICK LOGISTICS BAR (Inspired by The Met) -->
+    <section id="logistica-rapida" class="bg-marfilSoft border-b border-arena relative z-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-arena text-center md:text-left">
+          
+          <div class="pt-4 md:pt-0 md:px-4">
+            <span class="text-xs uppercase tracking-wider text-vino font-semibold block mb-1">Horario Hoy</span>
+            <p class="font-serif text-xl font-bold text-carbon">10:00 — 18:00</p>
+            <p class="text-xs text-carbon/60 mt-0.5">Lunes cerrado • Acceso hasta 17:30</p>
+          </div>
+
+          <div class="pt-4 md:pt-0 md:px-4">
+            <span class="text-xs uppercase tracking-wider text-vino font-semibold block mb-1">Admisión General</span>
+            <p class="font-serif text-xl font-bold text-carbon">$50 MXN</p>
+            <p class="text-xs text-carbon/60 mt-0.5">Domingos entrada libre para todos</p>
+          </div>
+
+          <div class="pt-4 md:pt-0 md:px-4">
+            <span class="text-xs uppercase tracking-wider text-vino font-semibold block mb-1">Ubicación</span>
+            <p class="font-serif text-xl font-bold text-carbon">Cepeda 354 Sur</p>
+            <p class="text-xs text-carbon/60 mt-0.5">Plaza de Armas, Centro de Torreón</p>
+          </div>
+
+          <div class="pt-4 md:pt-0 md:px-4">
+            <span class="text-xs uppercase tracking-wider text-vino font-semibold block mb-1">Estudiantes & INAPAM</span>
+            <p class="font-serif text-xl font-bold text-carbon">Gratuito / $30 MXN</p>
+            <p class="text-xs text-carbon/60 mt-0.5">Menores de 12 años sin costo</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. DESCUBRE AROCENA (Pilares del museo) -->
+    <section id="descubre" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-terracota font-semibold tracking-widest text-xs uppercase mb-3 block">Mucho más que obras de arte</span>
+        <h2 class="font-serif text-3xl sm:text-5xl font-bold text-carbon tracking-tight mb-4">
+          Un destino de experiencias para vivir y compartir
+        </h2>
+        <p class="text-carbonLight text-base sm:text-lg">
+          El Museo Arocena integra colecciones de arte virreinal, europeo y contemporáneo con la belleza del antiguo Casino de la Laguna y la Casa Histórica Arocena.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Card 1 -->
+        <article class="bg-white rounded-2xl overflow-hidden border border-arena/60 editorial-shadow hover:shadow-2xl transition-all duration-300 group flex flex-col">
+          <div class="relative h-64 overflow-hidden bg-arena">
+            <img src="https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?auto=format&fit=crop&w=800&q=80" 
+                 alt="Colección y exposiciones" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 bg-vino text-white text-xs uppercase font-semibold px-3 py-1 rounded-full">
+              Colección Permanente
+            </div>
+          </div>
+          <div class="p-6 sm:p-8 flex flex-col flex-grow">
+            <h3 class="font-serif text-2xl font-bold text-carbon mb-3 group-hover:text-vino transition-colors">
+              Arte Virreinal y Europeo
+            </h3>
+            <p class="text-carbon/70 text-sm leading-relaxed mb-6 flex-grow">
+              Más de 2,000 obras que abarcan pintura, platería, escultura y artes decorativas desde el siglo XVI hasta la era moderna en México y Europa.
+            </p>
+            <a href="#exposiciones" class="inline-flex items-center gap-2 text-vino font-semibold text-sm hover:gap-3 transition-all">
+              <span>Explorar salas</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="bg-white rounded-2xl overflow-hidden border border-arena/60 editorial-shadow hover:shadow-2xl transition-all duration-300 group flex flex-col">
+          <div class="relative h-64 overflow-hidden bg-arena">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" 
+                 alt="Arquitectura y Casa Histórica Arocena" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 bg-terracota text-white text-xs uppercase font-semibold px-3 py-1 rounded-full">
+              Patrimonio Vivo
+            </div>
+          </div>
+          <div class="p-6 sm:p-8 flex flex-col flex-grow">
+            <h3 class="font-serif text-2xl font-bold text-carbon mb-3 group-hover:text-vino transition-colors">
+              Arquitectura e Historia
+            </h3>
+            <p class="text-carbon/70 text-sm leading-relaxed mb-6 flex-grow">
+              Adéntrate en la Casa Histórica Arocena, un testimonio auténtico del auge algodonero y el estilo de vida porfiriano en la Comarca Lagunera.
+            </p>
+            <a href="#planeador" class="inline-flex items-center gap-2 text-vino font-semibold text-sm hover:gap-3 transition-all">
+              <span>Ver recorrido histórico</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="bg-white rounded-2xl overflow-hidden border border-arena/60 editorial-shadow hover:shadow-2xl transition-all duration-300 group flex flex-col">
+          <div class="relative h-64 overflow-hidden bg-arena">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" 
+                 alt="Cafetería, terraza y espacios sociales" 
+                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute top-4 left-4 bg-carbon text-white text-xs uppercase font-semibold px-3 py-1 rounded-full">
+              Encuentro Social
+            </div>
+          </div>
+          <div class="p-6 sm:p-8 flex flex-col flex-grow">
+            <h3 class="font-serif text-2xl font-bold text-carbon mb-3 group-hover:text-vino transition-colors">
+              Café, Terraza y Convivencia
+            </h3>
+            <p class="text-carbon/70 text-sm leading-relaxed mb-6 flex-grow">
+              El plan de fin de semana perfecto: disfruta de café artesanal, conversaciones al aire libre y eventos culturales en el patio central del museo.
+            </p>
+            <a href="#contacto" class="inline-flex items-center gap-2 text-vino font-semibold text-sm hover:gap-3 transition-all">
+              <span>Conoce los espacios</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- 4. EXPOSICIONES Y EVENTOS DESTACADOS (Inspirado en The Met) -->
+    <section id="exposiciones" class="py-20 bg-marfilSoft border-y border-arena">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div>
+            <span class="text-vino font-semibold tracking-widest text-xs uppercase mb-2 block">Cartelera Actual</span>
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-carbon">
+              Exposiciones y Temporadas
+            </h2>
+          </div>
+          <p class="text-carbonLight text-sm sm:text-base max-w-md mt-4 md:mt-0">
+            Muestras temporales de renombre nacional e internacional, diálogos artísticos y talleres para todo público.
+          </p>
+        </div>
+
+        <!-- Exhibitions Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Expo 1 -->
+          <div class="bg-white rounded-xl overflow-hidden border border-arena/70 shadow-sm hover:shadow-md transition-shadow">
+            <div class="aspect-video w-full overflow-hidden bg-arena relative">
+              <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=700&q=80" 
+                   alt="Exposición de pintura clásica" class="w-full h-full object-cover">
+              <span class="absolute bottom-3 left-3 bg-carbon/80 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded">
+                Sala de Temporales
+              </span>
+            </div>
+            <div class="p-6">
+              <p class="text-xs text-terracota font-bold uppercase tracking-wider mb-1">Hasta el 28 de Febrero 2027</p>
+              <h3 class="font-serif text-xl font-bold text-carbon mb-2">Maestros de la Pintura Novohispana</h3>
+              <p class="text-sm text-carbonLight mb-4 line-clamp-2">Una mirada profunda al esplendor del siglo XVII y XVIII a través de lienzos restaurados de la colección propia.</p>
+              <div class="flex items-center justify-between pt-3 border-t border-arena/50 text-xs">
+                <span class="text-carbon/60">Recorrido guiado disponible</span>
+                <a href="#planeador" class="text-vino font-semibold hover:underline">Incluir en mi visita →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expo 2 -->
+          <div class="bg-white rounded-xl overflow-hidden border border-arena/70 shadow-sm hover:shadow-md transition-shadow">
+            <div class="aspect-video w-full overflow-hidden bg-arena relative">
+              <img src="https://images.unsplash.com/photo-1544967082-d9d25d867d66?auto=format&fit=crop&w=700&q=80" 
+                   alt="Fotografía contemporánea" class="w-full h-full object-cover">
+              <span class="absolute bottom-3 left-3 bg-carbon/80 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded">
+                Fototeca Coahuila
+              </span>
+            </div>
+            <div class="p-6">
+              <p class="text-xs text-terracota font-bold uppercase tracking-wider mb-1">Hasta el 15 de Enero 2027</p>
+              <h3 class="font-serif text-xl font-bold text-carbon mb-2">Miradas del Desierto: Memoria y Rostros</h3>
+              <p class="text-sm text-carbonLight mb-4 line-clamp-2">Exhibición fotográfica que retrata la evolución social y el paisaje del norte de México en el siglo XX.</p>
+              <div class="flex items-center justify-between pt-3 border-t border-arena/50 text-xs">
+                <span class="text-carbon/60">Charla con curador los jueves</span>
+                <a href="#planeador" class="text-vino font-semibold hover:underline">Incluir en mi visita →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expo 3 -->
+          <div class="bg-white rounded-xl overflow-hidden border border-arena/70 shadow-sm hover:shadow-md transition-shadow">
+            <div class="aspect-video w-full overflow-hidden bg-arena relative">
+              <img src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=700&q=80" 
+                   alt="Arte Contemporáneo" class="w-full h-full object-cover">
+              <span class="absolute bottom-3 left-3 bg-carbon/80 backdrop-blur-sm text-white text-xs px-2.5 py-1 rounded">
+                Anexo Casino
+              </span>
+            </div>
+            <div class="p-6">
+              <p class="text-xs text-terracota font-bold uppercase tracking-wider mb-1">Permanente</p>
+              <h3 class="font-serif text-xl font-bold text-carbon mb-2">Plata y Fuego: Artes Suntuarias</h3>
+              <p class="text-sm text-carbonLight mb-4 line-clamp-2">Piezas únicas de orfebrería civil y religiosa que narran la historia comercial y minera regional.</p>
+              <div class="flex items-center justify-between pt-3 border-t border-arena/50 text-xs">
+                <span class="text-carbon/60">Audioguía interactiva</span>
+                <a href="#planeador" class="text-vino font-semibold hover:underline">Incluir en mi visita →</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. EXPERIENCIAS (Diferenciador PRD 6.3) -->
+    <section id="experiencias" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-terracota font-semibold tracking-widest text-xs uppercase mb-3 block">Interactivo & Dinámico</span>
+        <h2 class="font-serif text-3xl sm:text-5xl font-bold text-carbon mb-4">
+          Experiencias VIVE AROCENA
+        </h2>
+        <p class="text-carbonLight text-base">
+          Elige cómo quieres recorrer el museo según tu estado de ánimo, compañía o tiempo disponible.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="bg-white p-6 rounded-2xl border border-arena flex flex-col justify-between hover:border-vino transition-colors">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-vino/10 text-vino flex items-center justify-center mb-5">
+              <i data-lucide="headphones" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-carbon mb-2">Audiotours Temáticos</h3>
+            <p class="text-xs text-carbon/70 leading-relaxed">
+              Recorridos narrados en tu smartphone con historias y anécdotas secretas detrás de las obras más enigmáticas.
+            </p>
+          </div>
+          <span class="inline-block mt-6 text-xs font-semibold text-vino">Disponible en recepción</span>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-arena flex flex-col justify-between hover:border-vino transition-colors">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-terracota/10 text-terracota flex items-center justify-center mb-5">
+              <i data-lucide="users" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-carbon mb-2">Tardes de Cultura & Café</h3>
+            <p class="text-xs text-carbon/70 leading-relaxed">
+              Diseñado para disfrutar en pareja o amigos: charla cultural breve + tiempo libre en terraza y degustación de café lagunero.
+            </p>
+          </div>
+          <span class="inline-block mt-6 text-xs font-semibold text-terracota">Sábados y Domingos</span>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-arena flex flex-col justify-between hover:border-vino transition-colors">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-carbon/10 text-carbon flex items-center justify-center mb-5">
+              <i data-lucide="map-pin" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-carbon mb-2">Ruta Fotográfica</h3>
+            <p class="text-xs text-carbon/70 leading-relaxed">
+              Descubre los rincones arquitectónicos más estéticos del edificio histórico para fotógrafos aficionados y amantes del diseño.
+            </p>
+          </div>
+          <span class="inline-block mt-6 text-xs font-semibold text-carbon">Todo público</span>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-arena flex flex-col justify-between hover:border-vino transition-colors">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-600/10 text-emerald-700 flex items-center justify-center mb-5">
+              <i data-lucide="sparkles" class="w-6 h-6"></i>
+            </div>
+            <h3 class="font-serif text-xl font-bold text-carbon mb-2">Detectives del Arte</h3>
+            <p class="text-xs text-carbon/70 leading-relaxed">
+              Dinámica interactiva estilo búsqueda del tesoro para niños y familias con retos y pistas en cada sala.
+            </p>
+          </div>
+          <a href="#kids" class="inline-block mt-6 text-xs font-semibold text-emerald-700 hover:underline">Ver modo infantil →</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 6. PLANEA TU VISITA (HERRAMIENTA CENTRAL INTERACTIVA) -->
+    <section id="planeador" class="py-20 bg-arena/25 border-y border-arena">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <span class="text-vino font-semibold tracking-widest text-xs uppercase mb-2 block">Herramienta Interactiva</span>
+          <h2 class="font-serif text-3xl sm:text-5xl font-bold text-carbon mb-4">
+            Planea tu Visita en 1 Minuto
+          </h2>
+          <p class="text-carbonLight text-base">
+            Personaliza tu experiencia según quién te acompaña, el tiempo del que dispones y lo que más te apasiona. Te sugeriremos la ruta ideal.
+          </p>
+        </div>
+
+        <!-- Planner Card Container -->
+        <div class="bg-white rounded-3xl border border-arena shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+          
+          <!-- Controls Form (Left Column) -->
+          <div class="p-6 sm:p-10 lg:col-span-7 border-b lg:border-b-0 lg:border-r border-arena flex flex-col justify-between">
+            <form id="itinerary-form" class="space-y-8" onsubmit="event.preventDefault();">
+              
+              <!-- Step 1: Who is coming? -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-carbon mb-3 flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-vino text-white flex items-center justify-center text-[10px]">1</span>
+                  ¿Quiénes te acompañan?
+                </label>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="group-type-selector">
+                  <button type="button" data-val="solo" class="group-btn active p-3 rounded-xl border text-center transition-all bg-marfil border-vino text-vino font-medium text-xs sm:text-sm">
+                    <i data-lucide="user" class="w-5 h-5 mx-auto mb-1 text-vino"></i>
+                    Visita Solo
+                  </button>
+                  <button type="button" data-val="pareja" class="group-btn p-3 rounded-xl border border-arena text-center transition-all hover:bg-marfil text-carbon font-medium text-xs sm:text-sm">
+                    <i data-lucide="heart" class="w-5 h-5 mx-auto mb-1 text-carbon/60"></i>
+                    En Pareja
+                  </button>
+                  <button type="button" data-val="amigos" class="group-btn p-3 rounded-xl border border-arena text-center transition-all hover:bg-marfil text-carbon font-medium text-xs sm:text-sm">
+                    <i data-lucide="users" class="w-5 h-5 mx-auto mb-1 text-carbon/60"></i>
+                    Con Amigos
+                  </button>
+                  <button type="button" data-val="familia" class="group-btn p-3 rounded-xl border border-arena text-center transition-all hover:bg-marfil text-carbon font-medium text-xs sm:text-sm">
+                    <i data-lucide="baby" class="w-5 h-5 mx-auto mb-1 text-carbon/60"></i>
+                    En Familia
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 2: Available Time -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-carbon mb-3 flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-vino text-white flex items-center justify-center text-[10px]">2</span>
+                  ¿Cuánto tiempo dispones?
+                </label>
+                <div class="grid grid-cols-3 gap-2.5" id="duration-selector">
+                  <button type="button" data-duration="1" class="dur-btn p-3 rounded-xl border border-arena text-center transition-all hover:bg-marfil text-carbon font-medium text-xs sm:text-sm">
+                    <span class="block font-bold text-sm sm:text-base">1 Hora</span>
+                    <span class="text-[10px] text-carbon/60">Recorrido Exprés</span>
+                  </button>
+                  <button type="button" data-duration="2" class="dur-btn active p-3 rounded-xl border text-center transition-all bg-marfil border-vino text-vino font-medium text-xs sm:text-sm">
+                    <span class="block font-bold text-sm sm:text-base">2 Horas</span>
+                    <span class="text-[10px] text-vino/80">Recomendado</span>
+                  </button>
+                  <button type="button" data-duration="3" class="dur-btn p-3 rounded-xl border border-arena text-center transition-all hover:bg-marfil text-carbon font-medium text-xs sm:text-sm">
+                    <span class="block font-bold text-sm sm:text-base">+3 Horas</span>
+                    <span class="text-[10px] text-carbon/60">Inmersión Total</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Step 3: Interests -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-carbon mb-3 flex items-center gap-2">
+                  <span class="w-5 h-5 rounded-full bg-vino text-white flex items-center justify-center text-[10px]">3</span>
+                  ¿Cuáles son tus intereses principales?
+                </label>
+                <div class="flex flex-wrap gap-2" id="interests-selector">
+                  <button type="button" data-interest="arte" class="int-btn active px-3.5 py-2 rounded-lg text-xs font-medium border bg-vino text-white border-vino transition-colors">
+                    Pintura & Escultura
+                  </button>
+                  <button type="button" data-interest="arquitectura" class="int-btn active px-3.5 py-2 rounded-lg text-xs font-medium border bg-vino text-white border-vino transition-colors">
+                    Historia & Arquitectura
+                  </button>
+                  <button type="button" data-interest="cafe" class="int-btn px-3.5 py-2 rounded-lg text-xs font-medium border border-arena bg-marfil/50 text-carbon hover:bg-marfil transition-colors">
+                    Café & Terraza
+                  </button>
+                  <button type="button" data-interest="talleres" class="int-btn px-3.5 py-2 rounded-lg text-xs font-medium border border-arena bg-marfil/50 text-carbon hover:bg-marfil transition-colors">
+                    Actividades Interactivas
+                  </button>
+                </div>
+              </div>
+
+            </form>
+
+            <div class="pt-6 mt-6 border-t border-arena/60 flex items-center justify-between text-xs text-carbon/60">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                Itinerario adaptado al reglamento del museo
+              </span>
+              <button id="reset-itinerary-btn" class="text-terracota hover:underline font-medium">Reiniciar selecciones</button>
+            </div>
+          </div>
+
+          <!-- Generated Itinerary Result (Right Column) -->
+          <div class="p-6 sm:p-10 lg:col-span-5 bg-marfilSoft flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-[11px] uppercase tracking-wider font-bold text-terracota">Tu Plan Sugerido</span>
+                <span id="itinerary-badge" class="bg-vino/10 text-vino text-xs px-2.5 py-0.5 rounded-full font-semibold">
+                  2 Horas • Solo
+                </span>
+              </div>
+
+              <h3 id="itinerary-title" class="font-serif text-2xl font-bold text-carbon mb-2">
+                Recorrido de Descubrimiento Cultural
+              </h3>
+              <p id="itinerary-summary" class="text-xs text-carbon/70 mb-6">
+                Combinación ideal de las obras icónicas novohispanas con los espacios históricos más emblemáticos.
+              </p>
+
+              <!-- Dynamic Timeline -->
+              <div id="itinerary-steps" class="space-y-4 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-arena">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+            <!-- Card Bottom Actions & Pricing -->
+            <div class="mt-8 pt-6 border-t border-arena space-y-4">
+              <!-- Cost Breakdown Box -->
+              <div class="bg-white rounded-2xl p-4 border border-arena/70 shadow-sm">
+                <div class="flex items-center justify-between mb-1.5">
+                  <span class="text-xs text-carbon/70 font-medium">Costo estimado por persona:</span>
+                  <div class="text-right">
+                    <span id="cost-per-person" class="font-serif text-2xl font-bold text-vino">$50</span>
+                    <span class="text-[11px] text-carbon/60">MXN</span>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between text-[11px] text-carbon/60 pt-2 border-t border-arena/40">
+                  <span id="cost-breakdown-label">Boleto general ($50 MXN)</span>
+                  <span id="cost-total-group" class="font-semibold text-carbon">Total: $50 MXN</span>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex flex-col gap-2.5">
+                <!-- Payment / Booking Button -->
+                <button id="btn-pay-experience" class="w-full py-3.5 bg-vino hover:bg-vinoDark text-white rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                  <i data-lucide="credit-card" class="w-4 h-4"></i>
+                  <span id="btn-pay-text">Comprar Entradas / Pagar</span>
+                </button>
+
+                <!-- Save Itinerary Button -->
+                <button id="btn-save-itinerary" class="w-full py-2.5 bg-marfil hover:bg-arena/50 border border-arena text-carbon rounded-xl font-semibold text-xs tracking-wider uppercase transition-colors flex items-center justify-center gap-2">
+                  <i data-lucide="download" class="w-4 h-4"></i>
+                  <span>Guardar o Enviar Itinerario</span>
+                </button>
+
+                <p class="text-[11px] text-center text-carbon/50 leading-relaxed">
+                  Pasarela de pago segura y confirmación digital inmediata en tu correo. Domingos entrada libre.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 7. AROCENA KIDS (PRD 6.5) -->
+    <section id="kids" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-r from-terracota/15 via-marfilSoft to-arena/40 rounded-3xl p-8 sm:p-12 border border-terracota/30 editorial-shadow">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div class="lg:col-span-7 space-y-4">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracota/20 text-terracota text-xs font-bold uppercase tracking-wider">
+              <i data-lucide="award" class="w-4 h-4"></i>
+              <span>Espacio Familiar y Educativo</span>
+            </div>
+            
+            <h2 class="font-serif text-3xl sm:text-5xl font-bold text-carbon">
+              Arocena Kids: El arte es una aventura
+            </h2>
+            
+            <p class="text-carbonLight text-base leading-relaxed">
+              Diseñado para que niñas y niños exploren el museo a través de misiones, búsquedas del tesoro y preguntas divertidas. ¡Sin pantallas aburridas, con observación activa y premios al terminar!
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div class="flex items-start gap-3 bg-white/70 backdrop-blur-sm p-3.5 rounded-xl border border-arena">
+                <i data-lucide="search" class="w-5 h-5 text-terracota shrink-0 mt-0.5"></i>
+                <div>
+                  <h4 class="font-bold text-xs text-carbon">Misión «Detectives del Arte»</h4>
+                  <p class="text-[11px] text-carbon/70">Encuentra 5 animales escondidos en pinturas virreinales.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 bg-white/70 backdrop-blur-sm p-3.5 rounded-xl border border-arena">
+                <i data-lucide="palette" class="w-5 h-5 text-terracota shrink-0 mt-0.5"></i>
+                <div>
+                  <h4 class="font-bold text-xs text-carbon">Talleres Creativos de Fin de Semana</h4>
+                  <p class="text-[11px] text-carbon/70">Modelado en plastilina, dibujo y técnicas de acuarela.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-4 flex flex-wrap gap-4 items-center">
+              <button onclick="alert('¡Modo Detectives del Arte activado! Solicita tu pasaporte infantil gratis en la taquilla al llegar.')" class="bg-terracota hover:bg-terracotaLight text-white font-semibold text-xs px-6 py-3.5 rounded-full transition-all shadow flex items-center gap-2">
+                <i data-lucide="compass" class="w-4 h-4"></i>
+                <span>Descubrir Dinámicas Infantiles</span>
+              </button>
+              <span class="text-xs text-carbon/60 font-medium">Entrada 100% gratuita para menores de 12 años</span>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="relative mx-auto max-w-sm rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+              <img src="https://images.unsplash.com/photo-1577744486770-020ab432da65?auto=format&fit=crop&w=800&q=80" 
+                   alt="Familia y niños disfrutando actividades de arte" 
+                   class="w-full h-80 object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-carbon/70 via-transparent to-transparent flex items-end p-5 text-white">
+                <div>
+                  <span class="text-[10px] uppercase font-bold tracking-widest text-arena">Pasaporte de Aventuras</span>
+                  <p class="font-serif text-lg font-bold">Consigue tus insignias en cada sala</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. INFORMACIÓN PRÁCTICA, TARIFAS Y CONTACTO (PRD 6.7) -->
+    <section id="contacto" class="py-20 bg-marfil border-t border-arena">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+          
+          <!-- Column 1: Info & Rates -->
+          <div class="lg:col-span-5 space-y-8">
+            <div>
+              <span class="text-vino font-semibold tracking-widest text-xs uppercase mb-2 block">Información de Visita</span>
+              <h2 class="font-serif text-3xl sm:text-4xl font-bold text-carbon mb-4">
+                Todo lo que necesitas saber antes de venir
+              </h2>
+              <p class="text-carbonLight text-sm leading-relaxed">
+                El museo está ubicado en el corazón del Centro Histórico de Torreón, frente a la Plaza de Armas, con fácil acceso y estacionamientos cercanos.
+              </p>
+            </div>
+
+            <!-- Price Table Card -->
+            <div class="bg-white rounded-2xl border border-arena p-6 shadow-sm space-y-4">
+              <h3 class="font-serif text-lg font-bold text-carbon pb-2 border-b border-arena/60">
+                Tarifas y Admisión Oficial
+              </h3>
+              
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-carbon font-medium">Admisión General</span>
+                <span class="font-bold text-vino">$50 MXN</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-carbon">Estudiantes y Maestros (con credencial)</span>
+                <span class="font-bold text-carbon">$30 MXN</span>
+              </div>
+              <div class="flex justify-between items-center text-sm">
+                <span class="text-carbon">Adultos mayores (INAPAM) y menores de 12 años</span>
+                <span class="font-bold text-emerald-700">Entrada Libre</span>
+              </div>
+              <div class="flex justify-between items-center text-sm pt-2 border-t border-arena/60 font-semibold text-vino">
+                <span>Domingos para todo público</span>
+                <span class="uppercase tracking-wider text-xs bg-vino/10 px-2.5 py-1 rounded">Gratuito</span>
+              </div>
+            </div>
+
+            <!-- Contact data list -->
+            <div class="space-y-3 text-sm text-carbon/80">
+              <div class="flex items-center gap-3">
+                <i data-lucide="clock" class="w-5 h-5 text-vino shrink-0"></i>
+                <span><strong>Martes a Domingo:</strong> 10:00 a 18:00 hrs (Lunes cerrado)</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-lucide="map-pin" class="w-5 h-5 text-vino shrink-0"></i>
+                <span>Calle Cepeda 354 Sur, Col. Centro, C.P. 27000, Torreón, Coahuila</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-lucide="phone" class="w-5 h-5 text-vino shrink-0"></i>
+                <span>+52 (871) 712 0233</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <i data-lucide="mail" class="w-5 h-5 text-vino shrink-0"></i>
+                <span>contacto@museoarocena.com</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Interactive FAQs -->
+          <div class="lg:col-span-7" id="faq">
+            <span class="text-terracota font-semibold tracking-widest text-xs uppercase mb-2 block">Dudas Comunes</span>
+            <h3 class="font-serif text-2xl sm:text-3xl font-bold text-carbon mb-6">
+              Preguntas Frecuentes
+            </h3>
+
+            <div class="space-y-3">
+              
+              <!-- FAQ Item 1 -->
+              <details class="group bg-white rounded-xl border border-arena p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-200 open:shadow-md">
+                <summary class="flex items-center justify-between cursor-pointer font-medium text-carbon text-sm group-hover:text-vino">
+                  <span>¿Es necesario reservar con anticipación para entrar al museo?</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-carbon/50 transition-transform duration-200 group-open:rotate-180"></i>
+                </summary>
+                <p class="mt-3 text-xs sm:text-sm text-carbon/70 leading-relaxed pt-2 border-t border-arena/40">
+                  No es obligatorio para visitas individuales o familiares; puedes adquirir tu boleto directamente en taquilla. Para recorridos escolares o grupos de más de 15 personas se recomienda escribir previamente para programar guía.
+                </p>
+              </details>
+
+              <!-- FAQ Item 2 -->
+              <details class="group bg-white rounded-xl border border-arena p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-200 open:shadow-md">
+                <summary class="flex items-center justify-between cursor-pointer font-medium text-carbon text-sm group-hover:text-vino">
+                  <span>¿Se permite tomar fotografías en las salas?</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-carbon/50 transition-transform duration-200 group-open:rotate-180"></i>
+                </summary>
+                <p class="mt-3 text-xs sm:text-sm text-carbon/70 leading-relaxed pt-2 border-t border-arena/40">
+                  Sí, se permite la toma de fotografías de uso personal y no comercial sin flash ni trípodes en las áreas permanentes y patios históricos. Ciertas exposiciones temporales pueden tener restricciones específicas.
+                </p>
+              </details>
+
+              <!-- FAQ Item 3 -->
+              <details class="group bg-white rounded-xl border border-arena p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-200 open:shadow-md">
+                <summary class="flex items-center justify-between cursor-pointer font-medium text-carbon text-sm group-hover:text-vino">
+                  <span>¿El museo cuenta con accesibilidad para personas con movilidad reducida?</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-carbon/50 transition-transform duration-200 group-open:rotate-180"></i>
+                </summary>
+                <p class="mt-3 text-xs sm:text-sm text-carbon/70 leading-relaxed pt-2 border-t border-arena/40">
+                  Sí, contamos con rampas de acceso, elevadores hacia todas las salas de exhibición y sanitarios adaptados. Asimismo, disponemos de sillas de ruedas para préstamo gratuito en recepción.
+                </p>
+              </details>
+
+              <!-- FAQ Item 4 -->
+              <details class="group bg-white rounded-xl border border-arena p-5 [&_summary::-webkit-details-marker]:hidden transition-all duration-200 open:shadow-md">
+                <summary class="flex items-center justify-between cursor-pointer font-medium text-carbon text-sm group-hover:text-vino">
+                  <span>¿Dónde puedo estacionar mi automóvil?</span>
+                  <i data-lucide="chevron-down" class="w-4 h-4 text-carbon/50 transition-transform duration-200 group-open:rotate-180"></i>
+                </summary>
+                <p class="mt-3 text-xs sm:text-sm text-carbon/70 leading-relaxed pt-2 border-t border-arena/40">
+                  Frente y a los costados de la Plaza de Armas existen varios estacionamientos públicos subterráneos y comerciales a menos de 100 metros del acceso principal del museo sobre la calle Cepeda.
+                </p>
+              </details>
+
+            </div>
+
+            <!-- Map Placeholder / Teaser -->
+            <div class="mt-8 bg-white p-5 rounded-2xl border border-arena flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-vino/10 text-vino flex items-center justify-center shrink-0">
+                  <i data-lucide="map" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-xs text-carbon">¿Vienes en automóvil o transporte público?</h4>
+                  <p class="text-xs text-carbon/60">Abre la ubicación exacta en Google Maps o Apple Maps.</p>
+                </div>
+              </div>
+              <a href="https://maps.google.com/?q=Museo+Arocena+Torreon" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-4 py-2 bg-carbon hover:bg-carbonLight text-white rounded-lg text-xs font-semibold text-center transition-colors">
+                Abrir en Maps
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-carbon text-marfil pt-16 pb-12 border-t border-carbonLight">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+        
+        <div class="md:col-span-1 space-y-4">
+          <span class="font-serif text-2xl font-bold tracking-widest text-arena">
+            VIVE AROCENA
+          </span>
+          <p class="text-xs text-arena/70 leading-relaxed">
+            Plataforma digital interactiva para el descubrimiento cultural del Museo Arocena en Torreón, Coahuila.
+          </p>
+          <p class="text-xs text-arena/50">
+            «El arte se vive, no solamente se observa».
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-arena mb-4">Navegación</h4>
+          <ul class="space-y-2 text-xs text-marfil/80">
+            <li><a href="#descubre" class="hover:text-white transition-colors">Descubre Arocena</a></li>
+            <li><a href="#exposiciones" class="hover:text-white transition-colors">Exposiciones y Cartelera</a></li>
+            <li><a href="#experiencias" class="hover:text-white transition-colors">Experiencias y Rutas</a></li>
+            <li><a href="#planeador" class="hover:text-white transition-colors">Planeador de Visita</a></li>
+            <li><a href="#kids" class="hover:text-white transition-colors">Arocena Kids</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-arena mb-4">Información Oficial</h4>
+          <ul class="space-y-2 text-xs text-marfil/80">
+            <li><a href="#contacto" class="hover:text-white transition-colors">Horarios y Precios</a></li>
+            <li><a href="#contacto" class="hover:text-white transition-colors">Ubicación y Transporte</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+            <li><a href="http://www.museoarocena.com" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">Portal Institucional</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-arena mb-4">Conéctate</h4>
+          <p class="text-xs text-arena/70 mb-4">Sigue nuestras actividades semanales y estrenos de exposiciones:</p>
+          <div class="flex items-center gap-3 text-marfil">
+            <a href="https://facebook.com/museoarocena" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-8 h-8 rounded-full bg-white/10 hover:bg-vino transition-colors flex items-center justify-center text-sm">
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+            <a href="https://instagram.com/museoarocena" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white/10 hover:bg-vino transition-colors flex items-center justify-center text-sm">
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a href="https://youtube.com/museoarocena" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="w-8 h-8 rounded-full bg-white/10 hover:bg-vino transition-colors flex items-center justify-center text-sm">
+              <i data-lucide="youtube" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-carbonLight flex flex-col sm:flex-row justify-between items-center text-xs text-arena/60 gap-4">
+        <p>© 2026 Museo Arocena. Todos los derechos reservados. Proyecto VIVE AROCENA.</p>
+        <div class="flex items-center gap-4">
+          <a href="#" class="hover:text-white transition-colors">Aviso de Privacidad</a>
+          <span>•</span>
+          <a href="#" class="hover:text-white transition-colors">Accesibilidad</a>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- MODAL DE PAGO / RESERVACIÓN -->
+  <div id="payment-modal" class="fixed inset-0 z-50 hidden bg-carbon/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-marfilSoft border border-arena rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Close button -->
+      <button id="close-modal-btn" aria-label="Cerrar modal" class="absolute top-5 right-5 p-2 rounded-full hover:bg-arena/50 text-carbon/70 hover:text-carbon transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="mb-6">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-vino bg-vino/10 px-2.5 py-1 rounded-full">
+          Reserva & Compra Anticipada
+        </span>
+        <h3 class="font-serif text-2xl font-bold text-carbon mt-2">
+          Finaliza tu Experiencia VIVE AROCENA
+        </h3>
+        <p class="text-xs text-carbon/70 mt-1">
+          Acceso preferencial sin filas en taquilla y pase digital a las exposiciones.
+        </p>
+      </div>
+
+      <!-- Summary Card in Modal -->
+      <div class="bg-white rounded-2xl p-4 border border-arena mb-6 space-y-2 text-xs">
+        <div class="flex justify-between font-medium">
+          <span class="text-carbon/70">Modalidad:</span>
+          <span id="modal-summary-group" class="font-bold text-carbon">Visita Solo</span>
+        </div>
+        <div class="flex justify-between font-medium">
+          <span class="text-carbon/70">Duración estimada:</span>
+          <span id="modal-summary-duration" class="font-bold text-carbon">2 Horas</span>
+        </div>
+        <div class="flex justify-between font-medium">
+          <span class="text-carbon/70">Costo por persona:</span>
+          <span id="modal-summary-person" class="font-bold text-vino">$50 MXN</span>
+        </div>
+        <div class="flex justify-between items-center pt-2 border-t border-arena text-sm font-bold text-carbon">
+          <span>Total a pagar:</span>
+          <span id="modal-summary-total" class="font-serif text-xl text-vino">$50 MXN</span>
+        </div>
+      </div>
+
+      <!-- Payment Form Dummy -->
+      <form id="checkout-form" class="space-y-4" onsubmit="event.preventDefault();">
+        <div>
+          <label class="block text-xs font-semibold text-carbon mb-1">Nombre completo</label>
+          <input type="text" required placeholder="Ej. Ana Sofía Martínez" class="w-full px-3.5 py-2.5 rounded-xl border border-arena text-sm focus:outline-none focus:border-vino bg-white">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-carbon mb-1">Correo electrónico (para tus accesos digitales)</label>
+          <input type="email" required placeholder="correo@ejemplo.com" class="w-full px-3.5 py-2.5 rounded-xl border border-arena text-sm focus:outline-none focus:border-vino bg-white">
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" id="btn-submit-order" class="w-full py-3.5 bg-vino hover:bg-vinoDark text-white rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow flex items-center justify-center gap-2">
+            <i data-lucide="lock" class="w-4 h-4"></i>
+            <span>Confirmar y Pagar de Forma Segura</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-4 flex items-center justify-center gap-2 text-[11px] text-carbon/60">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+        <span>Pago simulado protegido con encriptación SSL de 256 bits</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCRIPT LÓGICA INTERACTIVA DEL MVP -->
+  <script>
+    // Inicializar iconos de Lucide
+    lucide.createIcons();
+
+    // Toggle Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Cerrar menú móvil al dar clic a un enlace
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // Estado del planeador de visita
+    const state = {
+      group: 'solo',
+      duration: '2',
+      interests: ['arte', 'arquitectura']
+    };
+
+    // Bases de conocimiento para generar el itinerario sugerido
+    const itineraryDatabase = {
+      '1': {
+        solo: [
+          { time: '0:00 - 0:30', title: 'Salas Virreinales Principales', desc: 'Recorrido concentrado por las 5 obras cumbre de la colección colonial novohispana.' },
+          { time: '0:30 - 1:00', title: 'Plataforma Panorámica y Patio Central', desc: 'Fotografía arquitectónica del Casino de La Laguna y detalles decorativos.' }
+        ],
+        pareja: [
+          { time: '0:00 - 0:35', title: 'Exposición Temporal Vigente', desc: 'Paseo curatorial de la muestra estelar con charla en audio guía.' },
+          { time: '0:35 - 1:00', title: 'Terraza y Café Arocena', desc: 'Bebida artesanal y vistas hacia la Plaza de Armas.' }
+        ],
+        amigos: [
+          { time: '0:00 - 0:40', title: 'Ruta Fotográfica Urbana & Arte Contemporáneo', desc: 'Espacios más instagrameables del edificio y obras escultóricas.' },
+          { time: '0:40 - 1:00', title: 'Tienda del Museo y Patio Central', desc: 'Recuerdos de diseño lagunero y descanso en la fuente.' }
+        ],
+        familia: [
+          { time: '0:00 - 0:40', title: 'Mini Reto Detectives del Arte', desc: 'Búsqueda guiada en salas bajas con pistas para los más pequeños.' },
+          { time: '0:40 - 1:00', title: 'Patio Lúdico y Refrigerio', desc: 'Descanso en área familiar con mesas de dibujo.' }
+        ]
+      },
+      '2': {
+        solo: [
+          { time: '0:00 - 0:45', title: 'Colección Permanente: Siglos XVI al XIX', desc: 'Pintura novohispana, artes suntuarias de plata y óleos flamencos.' },
+          { time: '0:45 - 1:25', title: 'Recorrido Casa Histórica Arocena', desc: 'Inmersión en la residencia porfiriana de época con mobiliario auténtico.' },
+          { time: '1:25 - 2:00', title: 'Librería y Espacio de Reflexión', desc: 'Pausa personal en el café del museo con vista a la arboleda exterior.' }
+        ],
+        pareja: [
+          { time: '0:00 - 0:45', title: 'Exposición Temporal y Galería Principal', desc: 'Recorrido sensorial con audio para compartir y comentar.' },
+          { time: '0:45 - 1:30', title: 'Casa Histórica Arocena', desc: 'Paseo íntimo por los aposentos de época con ambientación sonora.' },
+          { time: '1:30 - 2:00', title: 'Café & Dulcería Tradicional', desc: 'Degustación de café especialidad en el patio con sombra de arcos.' }
+        ],
+        amigos: [
+          { time: '0:00 - 0:45', title: 'Ruta de Arquitectura & Fototeca', desc: 'Historia de la fundación de Torreón a través del archivo fotográfico.' },
+          { time: '0:45 - 1:30', title: 'Exposiciones Contemporáneas', desc: 'Instalaciones artísticas e interactivos digitales.' },
+          { time: '1:30 - 2:00', title: 'Puntos de encuentro y Terraza', desc: 'Conversación abierta sobre las muestras y café de autor.' }
+        ],
+        familia: [
+          { time: '0:00 - 0:45', title: 'Detectives del Arte: Pasaporte Infantil', desc: 'Los niños buscan insignias resolviendo enigmas en las salas de arte.' },
+          { time: '0:45 - 1:30', title: 'Recorrido Interactivo Casa Arocena', desc: 'Descubrir cómo vivían los niños y familias hace 100 años.' },
+          { time: '1:30 - 2:00', title: 'Taller Exprés y Helados en el Patio', desc: 'Coloreado de postales de las obras visitadas.' }
+        ]
+      },
+      '3': {
+        solo: [
+          { time: '0:00 - 1:00', title: 'Inmersión Exhaustiva en Colecciones Permanentes', desc: 'Estudio de detalle de platería virreinal y piezas pictóricas novohispanas.' },
+          { time: '1:00 - 1:45', title: 'Muestra Temporal & Archivo Histórico', desc: 'Consulta de curaduría especial y catálogo de la exposición.' },
+          { time: '1:45 - 2:30', title: 'Casa Histórica Arocena con Guía Especializada', desc: 'Crónica completa de la familia Arocena y la época dorada algodonera.' },
+          { time: '2:30 - 3:00', title: 'Tiempo de Lectura en Terraza', desc: 'Cierre con café de origen y catálogo bibliográfico en mano.' }
+        ],
+        pareja: [
+          { time: '0:00 - 1:00', title: 'Todas las Exposiciones y Salas Virreinales', desc: 'Caminar sin prisas por el circuito completo del museo.' },
+          { time: '1:00 - 1:50', title: 'Casa Histórica Arocena', desc: 'Apreciar la colección de textiles, tapices y vajillas europeas.' },
+          { time: '1:50 - 2:40', title: 'Experiencia Gastronómica en Café Arocena', desc: 'Maridaje de bebidas locales y repostería artesanal.' },
+          { time: '2:40 - 3:00', title: 'Paseo por Tienda de Arte y Patio Central', desc: 'Adquisición de piezas de artesanos locales y libros de arte.' }
+        ],
+        amigos: [
+          { time: '0:00 - 1:00', title: 'Circuito Completo: Tradición y Vanguardia', desc: 'Desde arte colonial hasta piezas contemporáneas de La Laguna.' },
+          { time: '1:00 - 2:00', title: 'Muestra Temporal + Actividad de Debate Visual', desc: 'Comparativa fotográfica del antes y después de Torreón.' },
+          { time: '2:00 - 3:00', title: 'Tardeada en el Patio Central y Café', desc: 'Mesa larga para disfrutar del atardecer en el patio histórico.' }
+        ],
+        familia: [
+          { time: '0:00 - 1:00', title: 'Circuito Infantil Completo', desc: 'Búsqueda del tesoro en 3 niveles con entrega de insignia final.' },
+          { time: '1:00 - 1:45', title: 'Taller Creativo en Sala Educativa', desc: 'Creación manual inspirada en los patrones de azulejos del museo.' },
+          { time: '1:45 - 2:30', title: 'Casa Histórica Familiar', desc: 'Ruta guiada con dinámica teatralizada.' },
+          { time: '2:30 - 3:00', title: 'Merienda y descanso en Jardín Interior', desc: 'Momento para compartir anécdotas y fotos de la visita.' }
+        ]
+      }
+    };
+
+    // Pricing logic according to group and duration/interests
+    const pricingConfig = {
+      solo: { basePerPerson: 50, count: 1, label: '1 Boleto General ($50 MXN)' },
+      pareja: { basePerPerson: 50, count: 2, label: '2 Boletos Generales ($50 MXN c/u)' },
+      amigos: { basePerPerson: 45, count: 3, label: '3 Boletos Grupo ($45 MXN c/u con promo)' },
+      familia: { basePerPerson: 35, count: 4, label: 'Paquete Familiar (2 adultos + 2 niños gratis)' }
+    };
+
+    function updateItineraryView() {
+      const duration = state.duration;
+      const group = state.group;
+
+      // Actualizar badge y textos
+      const badgeText = `${duration === '3' ? '+3' : duration} Horas • ${
+        group === 'solo' ? 'Visita Solo' : 
+        group === 'pareja' ? 'En Pareja' : 
+        group === 'amigos' ? 'Con Amigos' : 'En Familia'
+      }`;
+      document.getElementById('itinerary-badge').innerText = badgeText;
+
+      // Actualizar precios dinámicos
+      const priceInfo = pricingConfig[group] || pricingConfig.solo;
+      const costPerPerson = priceInfo.basePerPerson;
+      const totalCost = group === 'familia' ? 100 : costPerPerson * priceInfo.count;
+
+      document.getElementById('cost-per-person').innerText = `$${costPerPerson}`;
+      document.getElementById('cost-breakdown-label').innerText = priceInfo.label;
+      document.getElementById('cost-total-group').innerText = `Total: $${totalCost} MXN`;
+      document.getElementById('btn-pay-text').innerText = `Comprar Entradas / Pagar ($${totalCost} MXN)`;
+
+      // Datos para el modal de pago
+      document.getElementById('modal-summary-group').innerText = 
+        group === 'solo' ? 'Visita Solo' : 
+        group === 'pareja' ? 'En Pareja' : 
+        group === 'amigos' ? 'Con Amigos' : 'En Familia';
+      document.getElementById('modal-summary-duration').innerText = `${duration === '3' ? '+3' : duration} Horas sugeridas`;
+      document.getElementById('modal-summary-person').innerText = `$${costPerPerson} MXN`;
+      document.getElementById('modal-summary-total').innerText = `$${totalCost} MXN`;
+
+      // Seleccionar pasos
+      const steps = (itineraryDatabase[duration] && itineraryDatabase[duration][group]) || itineraryDatabase['2']['solo'];
+      
+      const container = document.getElementById('itinerary-steps');
+      container.innerHTML = '';
+
+      steps.forEach((step, idx) => {
+        const stepEl = document.createElement('div');
+        stepEl.className = 'relative pl-8 pb-1';
+        stepEl.innerHTML = `
+          <div class="absolute left-1.5 top-1 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 border-vino bg-white"></div>
+          <span class="text-[11px] font-bold text-vino tracking-wider uppercase block mb-0.5">${step.time}</span>
+          <h4 class="text-sm font-bold text-carbon">${step.title}</h4>
+          <p class="text-xs text-carbon/70 mt-1">${step.desc}</p>
+        `;
+        container.appendChild(stepEl);
+      });
+    }
+
+    // Eventos Grupo
+    document.querySelectorAll('.group-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.group-btn').forEach(b => {
+          b.classList.remove('active', 'bg-marfil', 'border-vino', 'text-vino');
+          b.classList.add('border-arena', 'text-carbon');
+          const icon = b.querySelector('i');
+          if (icon) {
+            icon.classList.remove('text-vino');
+            icon.classList.add('text-carbon/60');
+          }
+        });
+        btn.classList.add('active', 'bg-marfil', 'border-vino', 'text-vino');
+        btn.classList.remove('border-arena', 'text-carbon');
+        const activeIcon = btn.querySelector('i');
+        if (activeIcon) {
+          activeIcon.classList.remove('text-carbon/60');
+          activeIcon.classList.add('text-vino');
+        }
+
+        state.group = btn.dataset.val;
+        updateItineraryView();
+      });
+    });
+
+    // Eventos Duración
+    document.querySelectorAll('.dur-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.dur-btn').forEach(b => {
+          b.classList.remove('active', 'bg-marfil', 'border-vino', 'text-vino');
+          b.classList.add('border-arena', 'text-carbon');
+          const span = b.querySelector('span:last-child');
+          if (span) {
+            span.classList.remove('text-vino/80');
+            span.classList.add('text-carbon/60');
+          }
+        });
+        btn.classList.add('active', 'bg-marfil', 'border-vino', 'text-vino');
+        btn.classList.remove('border-arena', 'text-carbon');
+        const activeSpan = btn.querySelector('span:last-child');
+        if (activeSpan) {
+          activeSpan.classList.remove('text-carbon/60');
+          activeSpan.classList.add('text-vino/80');
+        }
+
+        state.duration = btn.dataset.duration;
+        updateItineraryView();
+      });
+    });
+
+    // Eventos Intereses (Toggle)
+    document.querySelectorAll('.int-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.dataset.interest;
+        if (btn.classList.contains('active')) {
+          btn.classList.remove('active', 'bg-vino', 'text-white', 'border-vino');
+          btn.classList.add('border-arena', 'bg-marfil/50', 'text-carbon');
+          state.interests = state.interests.filter(item => item !== val);
+        } else {
+          btn.classList.add('active', 'bg-vino', 'text-white', 'border-vino');
+          btn.classList.remove('border-arena', 'bg-marfil/50', 'text-carbon');
+          state.interests.push(val);
+        }
+      });
+    });
+
+    // Reset button
+    document.getElementById('reset-itinerary-btn').addEventListener('click', () => {
+      state.group = 'solo';
+      state.duration = '2';
+      state.interests = ['arte', 'arquitectura'];
+
+      // Resetear botones UI
+      document.querySelector('.group-btn[data-val="solo"]').click();
+      document.querySelector('.dur-btn[data-duration="2"]').click();
+      updateItineraryView();
+    });
+
+    // Botón Guardar / Compartir
+    document.getElementById('btn-save-itinerary').addEventListener('click', () => {
+      const summary = `¡Mi plan de visita a VIVE AROCENA!\nDuración: ${state.duration} hrs\nModalidad: ${state.group}\nGenerado en la landing oficial.`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(summary).then(() => {
+          alert('¡Itinerario copiado al portapapeles! Puedes compartirlo o pegarlo en tus notas.');
+        }).catch(() => {
+          alert('Itinerario preparado. ¡Esperamos tu visita en el Museo Arocena!');
+        });
+      } else {
+        alert('Itinerario preparado. ¡Esperamos tu visita en el Museo Arocena!');
+      }
+    });
+
+    // Modal de Pago y Checkout
+    const paymentModal = document.getElementById('payment-modal');
+    const btnPayExperience = document.getElementById('btn-pay-experience');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const checkoutForm = document.getElementById('checkout-form');
+
+    btnPayExperience.addEventListener('click', () => {
+      paymentModal.classList.remove('hidden');
+      lucide.createIcons();
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      paymentModal.classList.add('hidden');
+    });
+
+    // Cerrar al hacer clic fuera del modal
+    paymentModal.addEventListener('click', (e) => {
+      if (e.target === paymentModal) {
+        paymentModal.classList.add('hidden');
+      }
+    });
+
+    // Inicializar cliente de Supabase
+    const SUPABASE_URL = 'https://pzrgqmrqnwgnnypozbjy.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB6cmdxbXJxbndnbm55cG96Ymp5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ5MzgwNTcsImV4cCI6MjExMDUxNDA1N30.zzSInCN31-6YBlY8jkVzKhr0niegyKTh-pmHObmTSKU';
+    const supabaseClient = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+    checkoutForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('btn-submit-order');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">◌</span> Procesando registro...';
+
+      const fullName = checkoutForm.querySelector('input[type="text"]').value;
+      const email = checkoutForm.querySelector('input[type="email"]').value;
+      const priceInfo = pricingConfig[state.group] || pricingConfig.solo;
+      const costPerPerson = priceInfo.basePerPerson;
+      const totalCost = state.group === 'familia' ? 100 : costPerPerson * priceInfo.count;
+
+      try {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient
+            .from('visit_bookings')
+            .insert([
+              {
+                full_name: fullName,
+                email: email,
+                group_type: state.group,
+                duration: state.duration,
+                cost_per_person: costPerPerson,
+                total_cost: totalCost,
+                status: 'confirmed'
+              }
+            ]);
+
+          if (error) {
+            console.warn('Error guardando en Supabase:', error.message);
+          } else {
+            console.log('Reservación registrada en Supabase exitosamente:', data);
+          }
+        }
+      } catch (err) {
+        console.warn('Excepción de Supabase:', err);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+
+      alert(`¡Reservación confirmada para ${fullName}!\n\nTus entradas digitales y el itinerario personalizado han sido enviados a ${email}. ¡Nos vemos en el Museo Arocena!`);
+      paymentModal.classList.add('hidden');
+      checkoutForm.reset();
+    });
+
+    // Render inicial
+    updateItineraryView();
+  </script>
+
+</body>
+</html>
