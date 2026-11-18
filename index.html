@@ -520,42 +520,61 @@
                   </button>
                 </div>
 
-                <!-- Desglose sutil para familia o grupos (solicita únicamente lo necesario) -->
-                <div id="family-breakdown" class="hidden mt-3 p-3 bg-marfilSoft rounded-xl border border-arena flex flex-wrap items-center justify-between gap-3 text-xs">
-                  <span class="font-semibold text-carbon/80 text-[11px] uppercase tracking-wider">Composición del grupo:</span>
-                  <div class="flex items-center gap-4">
-                    <label class="flex items-center gap-1.5 text-carbon">
-                      <span>Adultos:</span>
-                      <select id="count-adults" class="bg-white border border-arena rounded px-2 py-0.5 text-xs font-semibold">
-                        <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                      </select>
-                    </label>
-                    <label class="flex items-center gap-1.5 text-carbon">
-                      <span>Niños (-12 años):</span>
-                      <select id="count-kids" class="bg-white border border-arena rounded px-2 py-0.5 text-xs font-semibold">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2" selected>2</option>
-                        <option value="3">3</option>
-                      </select>
-                    </label>
+                <!-- Selector de Visitantes y Categorías (Ajustable para cualquier grupo) -->
+                <div class="mt-3.5 p-3.5 bg-marfilSoft rounded-2xl border border-arena space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-carbon uppercase tracking-wider flex items-center gap-1.5">
+                      <i data-lucide="users" class="w-3.5 h-3.5 text-vino"></i>
+                      Ajustar Visitantes:
+                    </span>
+                    <span class="text-[11px] text-carbon/60" id="visitors-total-counter">1 persona</span>
                   </div>
-                </div>
 
-                <!-- Fecha de Visita (para aplicar reglas de miércoles/domingo gratuito) -->
-                <div class="mt-3 flex items-center justify-between text-xs text-carbon/70 bg-white/70 p-2.5 rounded-xl border border-arena/60">
-                  <span class="flex items-center gap-1.5 font-medium">
-                    <i data-lucide="calendar" class="w-4 h-4 text-vino"></i>
-                    Día previsto de visita:
-                  </span>
-                  <div class="flex items-center gap-2">
-                    <select id="visit-day-select" class="bg-marfil text-carbon font-semibold text-xs border border-arena rounded-lg px-2.5 py-1 focus:outline-none focus:border-vino">
-                      <option value="regular">Día regular (Mar, Jue, Vie, Sáb)</option>
-                      <option value="free_wed">Miércoles (Entrada Gratuita)</option>
-                      <option value="free_sun">Domingo (Entrada Gratuita)</option>
+                  <div class="grid grid-cols-3 gap-2.5">
+                    <!-- Adultos -->
+                    <div class="bg-white p-2.5 rounded-xl border border-arena/70 text-center">
+                      <span class="block text-[11px] font-semibold text-carbon">Adultos</span>
+                      <span class="block text-[9px] text-carbon/60 mb-1.5">$60 c/u</span>
+                      <div class="flex items-center justify-center gap-2">
+                        <button type="button" id="btn-dec-adults" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">-</button>
+                        <span id="counter-adults" class="font-bold text-xs text-carbon w-4">1</span>
+                        <button type="button" id="btn-inc-adults" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">+</button>
+                      </div>
+                    </div>
+
+                    <!-- Estudiantes / Especial -->
+                    <div class="bg-white p-2.5 rounded-xl border border-arena/70 text-center">
+                      <span class="block text-[11px] font-semibold text-carbon">Estudiantes</span>
+                      <span class="block text-[9px] text-carbon/60 mb-1.5">$30 c/u</span>
+                      <div class="flex items-center justify-center gap-2">
+                        <button type="button" id="btn-dec-students" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">-</button>
+                        <span id="counter-students" class="font-bold text-xs text-carbon w-4">0</span>
+                        <button type="button" id="btn-inc-students" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">+</button>
+                      </div>
+                    </div>
+
+                    <!-- Niños -->
+                    <div class="bg-white p-2.5 rounded-xl border border-arena/70 text-center">
+                      <span class="block text-[11px] font-semibold text-carbon">Niños (-12)</span>
+                      <span class="block text-[9px] text-carbon/60 mb-1.5">$30 c/u</span>
+                      <div class="flex items-center justify-center gap-2">
+                        <button type="button" id="btn-dec-kids" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">-</button>
+                        <span id="counter-kids" class="font-bold text-xs text-carbon w-4">0</span>
+                        <button type="button" id="btn-inc-kids" class="w-6 h-6 rounded-lg bg-marfil hover:bg-arena text-carbon font-bold flex items-center justify-center text-xs transition-colors">+</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Día de Visita -->
+                  <div class="pt-2 border-t border-arena/50 flex items-center justify-between text-xs text-carbon/70">
+                    <span class="font-medium text-[11px] flex items-center gap-1">
+                      <i data-lucide="calendar" class="w-3.5 h-3.5 text-vino"></i>
+                      Día de visita:
+                    </span>
+                    <select id="visit-day-select" class="bg-white text-carbon font-semibold text-xs border border-arena rounded-lg px-2.5 py-1 focus:outline-none focus:border-vino">
+                      <option value="regular">Día regular ($60 / $30)</option>
+                      <option value="free_wed">Miércoles (Entrada Gratuita $0)</option>
+                      <option value="free_sun">Domingo (Entrada Gratuita $0)</option>
                     </select>
                   </div>
                 </div>
@@ -1190,23 +1209,14 @@
     function calculateSmartPrice(currentState) {
       const { group, duration, interests, visitDay, counts } = currentState;
       
-      // 1. Determinar número de visitantes por categoría
-      let visitors = { adults: 1, kids: 0, students: 0 };
-      if (group === 'solo') {
-        visitors = { adults: 1, kids: 0, students: 0 };
-      } else if (group === 'pareja') {
-        visitors = { adults: 2, kids: 0, students: 0 };
-      } else if (group === 'amigos') {
-        visitors = { adults: 3, kids: 0, students: 0 };
-      } else if (group === 'familia') {
-        visitors = {
-          adults: parseInt(counts.adults, 10) || 2,
-          kids: parseInt(counts.kids, 10) || 2,
-          students: 0
-        };
-      }
+      // 1. Obtener cantidad de visitantes por categoría directamente del estado ajustable
+      const visitors = {
+        adults: Math.max(0, parseInt(counts.adults, 10) || 0),
+        students: Math.max(0, parseInt(counts.students, 10) || 0),
+        kids: Math.max(0, parseInt(counts.kids, 10) || 0)
+      };
 
-      const totalVisitors = visitors.adults + visitors.kids + visitors.students;
+      const totalVisitors = visitors.adults + visitors.students + visitors.kids;
       const isFreeDay = PRICE_CATALOG.admissions.free_days.includes(visitDay);
 
       const lineItems = [];
@@ -1236,6 +1246,20 @@
             category: 'Entradas'
           });
           totalAmount += adultTotal;
+        }
+
+        if (visitors.students > 0) {
+          const studentsTotal = visitors.students * PRICE_CATALOG.admissions.special.price;
+          lineItems.push({
+            id: 'adm_students',
+            name: `Entrada Estudiantes / Especial (${visitors.students} pers.)`,
+            unitPrice: PRICE_CATALOG.admissions.special.price,
+            quantity: visitors.students,
+            total: studentsTotal,
+            isOfficial: true,
+            category: 'Entradas'
+          });
+          totalAmount += studentsTotal;
         }
 
         if (visitors.kids > 0) {
@@ -1450,9 +1474,58 @@
     });
 
     // ==========================================
-    // 6. EVENTOS DE INTERFAZ
+    // 6. EVENTOS DE INTERFAZ Y AJUSTE DE CONTADORES
     // ==========================================
-    // Selector de Grupo
+    function syncCountersUI() {
+      document.getElementById('counter-adults').innerText = state.counts.adults;
+      document.getElementById('counter-students').innerText = state.counts.students;
+      document.getElementById('counter-kids').innerText = state.counts.kids;
+
+      const total = state.counts.adults + state.counts.students + state.counts.kids;
+      document.getElementById('visitors-total-counter').innerText = `${total} ${total === 1 ? 'persona' : 'personas'}`;
+    }
+
+    // Botones de incremento / decremento
+    document.getElementById('btn-inc-adults').addEventListener('click', () => {
+      state.counts.adults++;
+      syncCountersUI();
+      updateItineraryView();
+    });
+    document.getElementById('btn-dec-adults').addEventListener('click', () => {
+      if (state.counts.adults > 0 && (state.counts.adults + state.counts.students + state.counts.kids) > 1) {
+        state.counts.adults--;
+        syncCountersUI();
+        updateItineraryView();
+      }
+    });
+
+    document.getElementById('btn-inc-students').addEventListener('click', () => {
+      state.counts.students++;
+      syncCountersUI();
+      updateItineraryView();
+    });
+    document.getElementById('btn-dec-students').addEventListener('click', () => {
+      if (state.counts.students > 0) {
+        state.counts.students--;
+        syncCountersUI();
+        updateItineraryView();
+      }
+    });
+
+    document.getElementById('btn-inc-kids').addEventListener('click', () => {
+      state.counts.kids++;
+      syncCountersUI();
+      updateItineraryView();
+    });
+    document.getElementById('btn-dec-kids').addEventListener('click', () => {
+      if (state.counts.kids > 0) {
+        state.counts.kids--;
+        syncCountersUI();
+        updateItineraryView();
+      }
+    });
+
+    // Selector de Grupo (Pre-configura contadores típicos que el usuario puede ajustar libremente)
     document.querySelectorAll('.group-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.group-btn').forEach(b => {
@@ -1474,26 +1547,20 @@
 
         state.group = btn.dataset.val;
 
-        // Mostrar / ocultar desglose de familia
-        const familyBreakdown = document.getElementById('family-breakdown');
-        if (state.group === 'familia') {
-          familyBreakdown.classList.remove('hidden');
-        } else {
-          familyBreakdown.classList.add('hidden');
+        // Configuración predeterminada según botón seleccionado
+        if (state.group === 'solo') {
+          state.counts = { adults: 1, students: 0, kids: 0 };
+        } else if (state.group === 'pareja') {
+          state.counts = { adults: 2, students: 0, kids: 0 };
+        } else if (state.group === 'amigos') {
+          state.counts = { adults: 3, students: 0, kids: 0 };
+        } else if (state.group === 'familia') {
+          state.counts = { adults: 2, students: 0, kids: 2 };
         }
 
+        syncCountersUI();
         updateItineraryView();
       });
-    });
-
-    // Desglose de familia (adultos y niños)
-    document.getElementById('count-adults').addEventListener('change', (e) => {
-      state.counts.adults = parseInt(e.target.value, 10);
-      updateItineraryView();
-    });
-    document.getElementById('count-kids').addEventListener('change', (e) => {
-      state.counts.kids = parseInt(e.target.value, 10);
-      updateItineraryView();
     });
 
     // Selector de día de visita
@@ -1553,9 +1620,7 @@
       state.counts = { adults: 1, kids: 0, students: 0 };
 
       document.getElementById('visit-day-select').value = 'regular';
-      document.getElementById('count-adults').value = '2';
-      document.getElementById('count-kids').value = '2';
-      document.getElementById('family-breakdown').classList.add('hidden');
+      syncCountersUI();
 
       // Botones por defecto
       document.querySelector('.group-btn[data-val="solo"]').click();
