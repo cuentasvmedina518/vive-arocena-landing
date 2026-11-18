@@ -212,8 +212,8 @@
 
           <div class="pt-4 md:pt-0 md:px-4">
             <span class="text-xs uppercase tracking-wider text-vino font-semibold block mb-1">Admisión General</span>
-            <p class="font-serif text-xl font-bold text-carbon">$50 MXN</p>
-            <p class="text-xs text-carbon/60 mt-0.5">Domingos entrada libre para todos</p>
+            <p class="font-serif text-xl font-bold text-carbon">$60 MXN</p>
+            <p class="text-xs text-carbon/60 mt-0.5">Miércoles y Domingos entrada libre</p>
           </div>
 
           <div class="pt-4 md:pt-0 md:px-4">
@@ -519,6 +519,46 @@
                     En Familia
                   </button>
                 </div>
+
+                <!-- Desglose sutil para familia o grupos (solicita únicamente lo necesario) -->
+                <div id="family-breakdown" class="hidden mt-3 p-3 bg-marfilSoft rounded-xl border border-arena flex flex-wrap items-center justify-between gap-3 text-xs">
+                  <span class="font-semibold text-carbon/80 text-[11px] uppercase tracking-wider">Composición del grupo:</span>
+                  <div class="flex items-center gap-4">
+                    <label class="flex items-center gap-1.5 text-carbon">
+                      <span>Adultos:</span>
+                      <select id="count-adults" class="bg-white border border-arena rounded px-2 py-0.5 text-xs font-semibold">
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </select>
+                    </label>
+                    <label class="flex items-center gap-1.5 text-carbon">
+                      <span>Niños (-12 años):</span>
+                      <select id="count-kids" class="bg-white border border-arena rounded px-2 py-0.5 text-xs font-semibold">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Fecha de Visita (para aplicar reglas de miércoles/domingo gratuito) -->
+                <div class="mt-3 flex items-center justify-between text-xs text-carbon/70 bg-white/70 p-2.5 rounded-xl border border-arena/60">
+                  <span class="flex items-center gap-1.5 font-medium">
+                    <i data-lucide="calendar" class="w-4 h-4 text-vino"></i>
+                    Día previsto de visita:
+                  </span>
+                  <div class="flex items-center gap-2">
+                    <select id="visit-day-select" class="bg-marfil text-carbon font-semibold text-xs border border-arena rounded-lg px-2.5 py-1 focus:outline-none focus:border-vino">
+                      <option value="regular">Día regular (Mar, Jue, Vie, Sáb)</option>
+                      <option value="free_wed">Miércoles (Entrada Gratuita)</option>
+                      <option value="free_sun">Domingo (Entrada Gratuita)</option>
+                    </select>
+                  </div>
+                </div>
               </div>
 
               <!-- Step 2: Available Time -->
@@ -606,14 +646,28 @@
                 <div class="flex items-center justify-between mb-1.5">
                   <span class="text-xs text-carbon/70 font-medium">Costo estimado por persona:</span>
                   <div class="text-right">
-                    <span id="cost-per-person" class="font-serif text-2xl font-bold text-vino">$50</span>
+                    <span id="cost-per-person" class="font-serif text-2xl font-bold text-vino">$60</span>
                     <span class="text-[11px] text-carbon/60">MXN</span>
                   </div>
                 </div>
                 
                 <div class="flex items-center justify-between text-[11px] text-carbon/60 pt-2 border-t border-arena/40">
-                  <span id="cost-breakdown-label">Boleto general ($50 MXN)</span>
-                  <span id="cost-total-group" class="font-semibold text-carbon">Total: $50 MXN</span>
+                  <span id="cost-breakdown-label">Entrada general ($60 MXN)</span>
+                  <span id="cost-total-group" class="font-semibold text-carbon">Total: $60 MXN</span>
+                </div>
+
+                <!-- Botón discreto para ver desglose sin saturar la interfaz -->
+                <div class="mt-2.5 pt-2 border-t border-arena/30 text-right">
+                  <button id="toggle-cost-details-btn" type="button" class="text-[11px] text-terracota hover:text-vino underline font-medium focus:outline-none">
+                    Ver detalle de costos
+                  </button>
+                </div>
+
+                <!-- Desglose colapsado por defecto -->
+                <div id="cost-details-drawer" class="hidden mt-2 pt-2 border-t border-dashed border-arena/60 text-[11px] space-y-1.5 text-carbon/75">
+                  <div id="cost-items-list" class="space-y-1">
+                    <!-- Injected dynamically -->
+                  </div>
                 </div>
               </div>
 
@@ -622,7 +676,7 @@
                 <!-- Payment / Booking Button -->
                 <button id="btn-pay-experience" class="w-full py-3.5 bg-vino hover:bg-vinoDark text-white rounded-xl font-bold text-xs tracking-wider uppercase transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
                   <i data-lucide="credit-card" class="w-4 h-4"></i>
-                  <span id="btn-pay-text">Comprar Entradas / Pagar</span>
+                  <span id="btn-pay-text">Comprar Entradas / Pagar ($60 MXN)</span>
                 </button>
 
                 <!-- Save Itinerary Button -->
@@ -632,7 +686,7 @@
                 </button>
 
                 <p class="text-[11px] text-center text-carbon/50 leading-relaxed">
-                  Pasarela de pago segura y confirmación digital inmediata en tu correo. Domingos entrada libre.
+                  Experiencias estimadas calculadas automáticamente. Miércoles y domingos entrada general libre ($0 MXN).
                 </p>
               </div>
             </div>
@@ -733,18 +787,14 @@
               
               <div class="flex justify-between items-center text-sm">
                 <span class="text-carbon font-medium">Admisión General</span>
-                <span class="font-bold text-vino">$50 MXN</span>
+                <span class="font-bold text-vino">$60 MXN</span>
               </div>
               <div class="flex justify-between items-center text-sm">
-                <span class="text-carbon">Estudiantes y Maestros (con credencial)</span>
+                <span class="text-carbon">Entrada Especial (Estudiantes, Maestros, INAPAM y niños)</span>
                 <span class="font-bold text-carbon">$30 MXN</span>
               </div>
-              <div class="flex justify-between items-center text-sm">
-                <span class="text-carbon">Adultos mayores (INAPAM) y menores de 12 años</span>
-                <span class="font-bold text-emerald-700">Entrada Libre</span>
-              </div>
               <div class="flex justify-between items-center text-sm pt-2 border-t border-arena/60 font-semibold text-vino">
-                <span>Domingos para todo público</span>
+                <span>Miércoles y Domingos para todo público</span>
                 <span class="uppercase tracking-wider text-xs bg-vino/10 px-2.5 py-1 rounded">Gratuito</span>
               </div>
             </div>
@@ -943,20 +993,30 @@
       <!-- Summary Card in Modal -->
       <div class="bg-white rounded-2xl p-4 border border-arena mb-6 space-y-2 text-xs">
         <div class="flex justify-between font-medium">
-          <span class="text-carbon/70">Modalidad:</span>
-          <span id="modal-summary-group" class="font-bold text-carbon">Visita Solo</span>
+          <span class="text-carbon/70">Fecha / Día de visita:</span>
+          <span id="modal-summary-day" class="font-bold text-carbon">Día regular</span>
+        </div>
+        <div class="flex justify-between font-medium">
+          <span class="text-carbon/70">Visitantes / Modalidad:</span>
+          <span id="modal-summary-group" class="font-bold text-carbon">Visita Solo (1 persona)</span>
         </div>
         <div class="flex justify-between font-medium">
           <span class="text-carbon/70">Duración estimada:</span>
           <span id="modal-summary-duration" class="font-bold text-carbon">2 Horas</span>
         </div>
         <div class="flex justify-between font-medium">
-          <span class="text-carbon/70">Costo por persona:</span>
-          <span id="modal-summary-person" class="font-bold text-vino">$50 MXN</span>
+          <span class="text-carbon/70">Costo estimado por persona:</span>
+          <span id="modal-summary-person" class="font-bold text-vino">$60 MXN</span>
+        </div>
+        <div class="pt-2 border-t border-arena">
+          <span class="text-[10px] uppercase font-bold text-terracota tracking-wider block mb-1">Conceptos incluidos en cotización:</span>
+          <div id="modal-cost-breakdown-list" class="space-y-1 text-carbon/70 text-[11px]">
+            <!-- Injected dynamically -->
+          </div>
         </div>
         <div class="flex justify-between items-center pt-2 border-t border-arena text-sm font-bold text-carbon">
           <span>Total a pagar:</span>
-          <span id="modal-summary-total" class="font-serif text-xl text-vino">$50 MXN</span>
+          <span id="modal-summary-total" class="font-serif text-xl text-vino">$60 MXN</span>
         </div>
       </div>
 
@@ -1006,128 +1066,304 @@
       });
     });
 
-    // Estado del planeador de visita
+    // ==========================================
+    // 1. CATÁLOGO CENTRALIZADO DE PRECIOS
+    // ==========================================
+    const PRICE_CATALOG = {
+      admissions: {
+        general: { id: 'adm_gen', name: 'Entrada General', price: 60, chargeType: 'per_person', official: true },
+        special: { id: 'adm_esp', name: 'Entrada Especial (Estudiantes, Maestros, INAPAM, Niños)', price: 30, chargeType: 'per_person', official: true },
+        free_days: ['free_wed', 'free_sun'] // Miércoles y Domingos
+      },
+      experiences: {
+        digital_interactive: { id: 'exp_digital', name: 'Recorrido interactivo digital', price: 40, chargeType: 'per_person', official: false },
+        tech_immersive: { id: 'exp_immersive', name: 'Experiencia inmersiva tecnológica', price: 90, chargeType: 'per_person', official: false },
+        creative_workshop: { id: 'exp_workshop', name: 'Taller creativo Arocena Creative', price: 180, chargeType: 'per_participant', official: false },
+        kids_activities: { id: 'exp_kids', name: 'Actividades Arocena Kids', price: 120, chargeType: 'per_kid', official: false },
+        after_hours: { id: 'exp_after_hours', name: 'Arocena After Hours', price: 350, chargeType: 'per_person', official: false },
+        special_event: { id: 'exp_event', name: 'Evento especial o taller temático', price: 180, chargeType: 'per_participant', official: false }
+      },
+      complements: {
+        cafe_combo: { id: 'comp_cafe', name: 'Combo de cafetería', price: 95, chargeType: 'per_item', official: false },
+        drink: { id: 'comp_drink', name: 'Bebida artesanal', price: 45, chargeType: 'per_item', official: false },
+        snack: { id: 'comp_snack', name: 'Snack tradicional', price: 50, chargeType: 'per_item', official: false },
+        creative_kit: { id: 'comp_kit', name: 'Kit creativo adicional', price: 65, chargeType: 'per_kit', official: false },
+        souvenir_store: { id: 'comp_souvenir', name: 'Recuerdo de tienda', price: 150, chargeType: 'per_item', official: false },
+        digital_souvenir: { id: 'comp_digital_souvenir', name: 'Recuerdo digital', price: 30, chargeType: 'per_person', official: false }
+      },
+      guided_services: {
+        general_guided: { id: 'guide_general', name: 'Visita guiada general (provisional)', price: 150, chargeType: 'per_booking', official: false },
+        english_guided: { id: 'guide_english', name: 'Visita guiada en inglés (provisional)', price: 200, chargeType: 'per_booking', official: false },
+        school_guided: { id: 'guide_school', name: 'Visita guiada escolar (provisional)', price: 100, chargeType: 'per_booking', official: false }
+      }
+    };
+
+    // ==========================================
+    // 2. ESTADO DEL PLANEADOR
+    // ==========================================
     const state = {
       group: 'solo',
       duration: '2',
-      interests: ['arte', 'arquitectura']
+      interests: ['arte', 'arquitectura'],
+      visitDay: 'regular', // 'regular', 'free_wed', 'free_sun'
+      counts: {
+        adults: 1,
+        kids: 0,
+        students: 0
+      }
     };
 
-    // Bases de conocimiento para generar el itinerario sugerido
+    // ==========================================
+    // 3. BASE DE DATOS DE ITINERARIOS
+    // ==========================================
     const itineraryDatabase = {
       '1': {
         solo: [
-          { time: '0:00 - 0:30', title: 'Salas Virreinales Principales', desc: 'Recorrido concentrado por las 5 obras cumbre de la colección colonial novohispana.' },
-          { time: '0:30 - 1:00', title: 'Plataforma Panorámica y Patio Central', desc: 'Fotografía arquitectónica del Casino de La Laguna y detalles decorativos.' }
+          { time: '0:00 - 0:30', title: 'Salas Virreinales Principales', desc: 'Recorrido concentrado por las obras cumbre novohispanas.', includedInTicket: true },
+          { time: '0:30 - 1:00', title: 'Plataforma Panorámica y Casino', desc: 'Paseo arquitectónico y mirador hacia Plaza de Armas.', includedInTicket: true }
         ],
         pareja: [
-          { time: '0:00 - 0:35', title: 'Exposición Temporal Vigente', desc: 'Paseo curatorial de la muestra estelar con charla en audio guía.' },
-          { time: '0:35 - 1:00', title: 'Terraza y Café Arocena', desc: 'Bebida artesanal y vistas hacia la Plaza de Armas.' }
+          { time: '0:00 - 0:35', title: 'Exposición Temporal Vigente', desc: 'Paseo curatorial de la muestra estelar con audio introductorio.', includedInTicket: true },
+          { time: '0:35 - 1:00', title: 'Terraza y Café Arocena', desc: 'Espacio de convivencia y contemplación arquitectónica.', includedInTicket: true }
         ],
         amigos: [
-          { time: '0:00 - 0:40', title: 'Ruta Fotográfica Urbana & Arte Contemporáneo', desc: 'Espacios más instagrameables del edificio y obras escultóricas.' },
-          { time: '0:40 - 1:00', title: 'Tienda del Museo y Patio Central', desc: 'Recuerdos de diseño lagunero y descanso en la fuente.' }
+          { time: '0:00 - 0:40', title: 'Ruta Fotográfica Urbana & Arte Contemporáneo', desc: 'Espacios estéticos del edificio histórico e interactivos.', includedInTicket: true },
+          { time: '0:40 - 1:00', title: 'Tienda del Museo y Patio Central', desc: 'Recuerdos de diseño lagunero y descanso en la fuente.', includedInTicket: true }
         ],
         familia: [
-          { time: '0:00 - 0:40', title: 'Mini Reto Detectives del Arte', desc: 'Búsqueda guiada en salas bajas con pistas para los más pequeños.' },
-          { time: '0:40 - 1:00', title: 'Patio Lúdico y Refrigerio', desc: 'Descanso en área familiar con mesas de dibujo.' }
+          { time: '0:00 - 0:40', title: 'Mini Reto Detectives del Arte', desc: 'Búsqueda visual de personajes y animales en salas bajas.', includedInTicket: true },
+          { time: '0:40 - 1:00', title: 'Patio Lúdico Familiar', desc: 'Descanso en área familiar con mesas de observación.', includedInTicket: true }
         ]
       },
       '2': {
         solo: [
-          { time: '0:00 - 0:45', title: 'Colección Permanente: Siglos XVI al XIX', desc: 'Pintura novohispana, artes suntuarias de plata y óleos flamencos.' },
-          { time: '0:45 - 1:25', title: 'Recorrido Casa Histórica Arocena', desc: 'Inmersión en la residencia porfiriana de época con mobiliario auténtico.' },
-          { time: '1:25 - 2:00', title: 'Librería y Espacio de Reflexión', desc: 'Pausa personal en el café del museo con vista a la arboleda exterior.' }
+          { time: '0:00 - 0:45', title: 'Colección Permanente: Siglos XVI al XIX', desc: 'Pintura novohispana, artes suntuarias de plata y óleos.', includedInTicket: true },
+          { time: '0:45 - 1:25', title: 'Recorrido Casa Histórica Arocena', desc: 'Inmersión en la residencia porfiriana de época.', includedInTicket: true },
+          { time: '1:25 - 2:00', title: 'Librería y Espacio de Reflexión', desc: 'Pausa personal con vista al patio central.', includedInTicket: true }
         ],
         pareja: [
-          { time: '0:00 - 0:45', title: 'Exposición Temporal y Galería Principal', desc: 'Recorrido sensorial con audio para compartir y comentar.' },
-          { time: '0:45 - 1:30', title: 'Casa Histórica Arocena', desc: 'Paseo íntimo por los aposentos de época con ambientación sonora.' },
-          { time: '1:30 - 2:00', title: 'Café & Dulcería Tradicional', desc: 'Degustación de café especialidad en el patio con sombra de arcos.' }
+          { time: '0:00 - 0:45', title: 'Exposición Temporal y Galería Principal', desc: 'Recorrido sensorial con audio para compartir y comentar.', includedInTicket: true },
+          { time: '0:45 - 1:30', title: 'Casa Histórica Arocena', desc: 'Paseo íntimo por los aposentos con mobiliario original.', includedInTicket: true },
+          { time: '1:30 - 2:00', title: 'Patio Central & Espacios de Convivencia', desc: 'Ambiente tranquilo bajo los arcos históricos.', includedInTicket: true }
         ],
         amigos: [
-          { time: '0:00 - 0:45', title: 'Ruta de Arquitectura & Fototeca', desc: 'Historia de la fundación de Torreón a través del archivo fotográfico.' },
-          { time: '0:45 - 1:30', title: 'Exposiciones Contemporáneas', desc: 'Instalaciones artísticas e interactivos digitales.' },
-          { time: '1:30 - 2:00', title: 'Puntos de encuentro y Terraza', desc: 'Conversación abierta sobre las muestras y café de autor.' }
+          { time: '0:00 - 0:45', title: 'Ruta de Arquitectura & Fototeca', desc: 'Historia de la fundación de Torreón y archivo fotográfico.', includedInTicket: true },
+          { time: '0:45 - 1:30', title: 'Exposiciones Contemporáneas', desc: 'Instalaciones artísticas y dinámicas de diálogo.', includedInTicket: true },
+          { time: '1:30 - 2:00', title: 'Puntos de encuentro y Terraza', desc: 'Conversación abierta sobre las muestras.', includedInTicket: true }
         ],
         familia: [
-          { time: '0:00 - 0:45', title: 'Detectives del Arte: Pasaporte Infantil', desc: 'Los niños buscan insignias resolviendo enigmas en las salas de arte.' },
-          { time: '0:45 - 1:30', title: 'Recorrido Interactivo Casa Arocena', desc: 'Descubrir cómo vivían los niños y familias hace 100 años.' },
-          { time: '1:30 - 2:00', title: 'Taller Exprés y Helados en el Patio', desc: 'Coloreado de postales de las obras visitadas.' }
+          { time: '0:00 - 0:45', title: 'Detectives del Arte: Pasaporte Infantil', desc: 'Los niños buscan insignias resolviendo pistas en salas de arte.', includedInTicket: true },
+          { time: '0:45 - 1:30', title: 'Recorrido Interactivo Casa Arocena', desc: 'Descubrir cómo vivían las familias hace 100 años.', includedInTicket: true },
+          { time: '1:30 - 2:00', title: 'Espacio Educativo y Patio Lúdico', desc: 'Descanso en área familiar con dinamización creativa.', includedInTicket: true }
         ]
       },
       '3': {
         solo: [
-          { time: '0:00 - 1:00', title: 'Inmersión Exhaustiva en Colecciones Permanentes', desc: 'Estudio de detalle de platería virreinal y piezas pictóricas novohispanas.' },
-          { time: '1:00 - 1:45', title: 'Muestra Temporal & Archivo Histórico', desc: 'Consulta de curaduría especial y catálogo de la exposición.' },
-          { time: '1:45 - 2:30', title: 'Casa Histórica Arocena con Guía Especializada', desc: 'Crónica completa de la familia Arocena y la época dorada algodonera.' },
-          { time: '2:30 - 3:00', title: 'Tiempo de Lectura en Terraza', desc: 'Cierre con café de origen y catálogo bibliográfico en mano.' }
+          { time: '0:00 - 1:00', title: 'Inmersión Exhaustiva en Colecciones Permanentes', desc: 'Estudio de detalle de platería virreinal y piezas pictóricas.', includedInTicket: true },
+          { time: '1:00 - 1:45', title: 'Muestra Temporal & Archivo Histórico', desc: 'Consulta de curaduría especial y catálogo de exposición.', includedInTicket: true },
+          { time: '1:45 - 2:30', title: 'Casa Histórica Arocena', desc: 'Crónica completa de la familia y época algodonera.', includedInTicket: true },
+          { time: '2:30 - 3:00', title: 'Tiempo de Lectura en Terraza', desc: 'Cierre sereno en los jardines y corredores.', includedInTicket: true }
         ],
         pareja: [
-          { time: '0:00 - 1:00', title: 'Todas las Exposiciones y Salas Virreinales', desc: 'Caminar sin prisas por el circuito completo del museo.' },
-          { time: '1:00 - 1:50', title: 'Casa Histórica Arocena', desc: 'Apreciar la colección de textiles, tapices y vajillas europeas.' },
-          { time: '1:50 - 2:40', title: 'Experiencia Gastronómica en Café Arocena', desc: 'Maridaje de bebidas locales y repostería artesanal.' },
-          { time: '2:40 - 3:00', title: 'Paseo por Tienda de Arte y Patio Central', desc: 'Adquisición de piezas de artesanos locales y libros de arte.' }
+          { time: '0:00 - 1:00', title: 'Todas las Exposiciones y Salas Virreinales', desc: 'Caminar sin prisas por el circuito completo del museo.', includedInTicket: true },
+          { time: '1:00 - 1:50', title: 'Casa Histórica Arocena', desc: 'Apreciar la colección de textiles, tapices y artes suntuarias.', includedInTicket: true },
+          { time: '1:50 - 2:40', title: 'Pausa en Terraza Histórica', desc: 'Ambiente contemplativo al atardecer en el patio.', includedInTicket: true },
+          { time: '2:40 - 3:00', title: 'Paseo por Tienda de Arte y Librería', desc: 'Piezas de diseño lagunero y catálogos de arte.', includedInTicket: true }
         ],
         amigos: [
-          { time: '0:00 - 1:00', title: 'Circuito Completo: Tradición y Vanguardia', desc: 'Desde arte colonial hasta piezas contemporáneas de La Laguna.' },
-          { time: '1:00 - 2:00', title: 'Muestra Temporal + Actividad de Debate Visual', desc: 'Comparativa fotográfica del antes y después de Torreón.' },
-          { time: '2:00 - 3:00', title: 'Tardeada en el Patio Central y Café', desc: 'Mesa larga para disfrutar del atardecer en el patio histórico.' }
+          { time: '0:00 - 1:00', title: 'Circuito Completo: Tradición y Vanguardia', desc: 'Desde arte colonial hasta piezas contemporáneas.', includedInTicket: true },
+          { time: '1:00 - 2:00', title: 'Muestra Temporal + Actividad de Debate Visual', desc: 'Comparativa fotográfica y perspectivas artísticas.', includedInTicket: true },
+          { time: '2:00 - 3:00', title: 'Tardeada en el Patio Central', desc: 'Punto de encuentro social en el corazón del museo.', includedInTicket: true }
         ],
         familia: [
-          { time: '0:00 - 1:00', title: 'Circuito Infantil Completo', desc: 'Búsqueda del tesoro en 3 niveles con entrega de insignia final.' },
-          { time: '1:00 - 1:45', title: 'Taller Creativo en Sala Educativa', desc: 'Creación manual inspirada en los patrones de azulejos del museo.' },
-          { time: '1:45 - 2:30', title: 'Casa Histórica Familiar', desc: 'Ruta guiada con dinámica teatralizada.' },
-          { time: '2:30 - 3:00', title: 'Merienda y descanso en Jardín Interior', desc: 'Momento para compartir anécdotas y fotos de la visita.' }
+          { time: '0:00 - 1:00', title: 'Circuito Infantil Completo', desc: 'Búsqueda del tesoro en 3 niveles con entrega de insignia.', includedInTicket: true },
+          { time: '1:00 - 1:45', title: 'Sala Educativa Familiar', desc: 'Observación y dinámicas guiadas para padres e hijos.', includedInTicket: true },
+          { time: '1:45 - 2:30', title: 'Casa Histórica Familiar', desc: 'Ruta con relatos históricos adaptados a niños.', includedInTicket: true },
+          { time: '2:30 - 3:00', title: 'Descanso en Jardín Interior', desc: 'Tiempo libre para compartir anécdotas y fotos de la visita.', includedInTicket: true }
         ]
       }
     };
 
-    // Pricing logic according to group and duration/interests
-    const pricingConfig = {
-      solo: { basePerPerson: 50, count: 1, label: '1 Boleto General ($50 MXN)' },
-      pareja: { basePerPerson: 50, count: 2, label: '2 Boletos Generales ($50 MXN c/u)' },
-      amigos: { basePerPerson: 45, count: 3, label: '3 Boletos Grupo ($45 MXN c/u con promo)' },
-      familia: { basePerPerson: 35, count: 4, label: 'Paquete Familiar (2 adultos + 2 niños gratis)' }
-    };
+    // =========================================================================
+    // 4. MOTOR INTELIGENTE DE PRECIOS (Interpretación contextual e independiente)
+    // =========================================================================
+    function calculateSmartPrice(currentState) {
+      const { group, duration, interests, visitDay, counts } = currentState;
+      
+      // 1. Determinar número de visitantes por categoría
+      let visitors = { adults: 1, kids: 0, students: 0 };
+      if (group === 'solo') {
+        visitors = { adults: 1, kids: 0, students: 0 };
+      } else if (group === 'pareja') {
+        visitors = { adults: 2, kids: 0, students: 0 };
+      } else if (group === 'amigos') {
+        visitors = { adults: 3, kids: 0, students: 0 };
+      } else if (group === 'familia') {
+        visitors = {
+          adults: parseInt(counts.adults, 10) || 2,
+          kids: parseInt(counts.kids, 10) || 2,
+          students: 0
+        };
+      }
 
+      const totalVisitors = visitors.adults + visitors.kids + visitors.students;
+      const isFreeDay = PRICE_CATALOG.admissions.free_days.includes(visitDay);
+
+      const lineItems = [];
+      let totalAmount = 0;
+
+      // 2. Cálculo de Entradas
+      if (isFreeDay) {
+        lineItems.push({
+          id: 'adm_free',
+          name: `Entrada Día Libre (${visitDay === 'free_wed' ? 'Miércoles' : 'Domingo'})`,
+          unitPrice: 0,
+          quantity: totalVisitors,
+          total: 0,
+          isOfficial: true,
+          category: 'Entradas'
+        });
+      } else {
+        if (visitors.adults > 0) {
+          const adultTotal = visitors.adults * PRICE_CATALOG.admissions.general.price;
+          lineItems.push({
+            id: 'adm_gen',
+            name: `Entrada General (${visitors.adults} adulto${visitors.adults > 1 ? 's' : ''})`,
+            unitPrice: PRICE_CATALOG.admissions.general.price,
+            quantity: visitors.adults,
+            total: adultTotal,
+            isOfficial: true,
+            category: 'Entradas'
+          });
+          totalAmount += adultTotal;
+        }
+
+        if (visitors.kids > 0) {
+          const kidsTotal = visitors.kids * PRICE_CATALOG.admissions.special.price;
+          lineItems.push({
+            id: 'adm_kids',
+            name: `Entrada Especial Niños (${visitors.kids} menor${visitors.kids > 1 ? 'es' : ''})`,
+            unitPrice: PRICE_CATALOG.admissions.special.price,
+            quantity: visitors.kids,
+            total: kidsTotal,
+            isOfficial: true,
+            category: 'Entradas'
+          });
+          totalAmount += kidsTotal;
+        }
+      }
+
+      // 3. Detección Inteligente de Experiencias Contextuales
+      // Regla: No cobrar solo por interés; cobrar cuando forma parte del itinerario real
+      const hasInteractive = interests.includes('talleres');
+      const hasArt = interests.includes('arte');
+      const isExtended = duration === '3';
+      const isMedium = duration === '2';
+
+      // A) Con amigos + 2h o 3h + interés en interactivos -> Recorrido Interactivo Digital ($40/pers)
+      if (group === 'amigos' && hasInteractive && (isMedium || isExtended)) {
+        const cost = totalVisitors * PRICE_CATALOG.experiences.digital_interactive.price;
+        lineItems.push({
+          id: PRICE_CATALOG.experiences.digital_interactive.id,
+          name: `${PRICE_CATALOG.experiences.digital_interactive.name} (${totalVisitors} pers.)`,
+          unitPrice: PRICE_CATALOG.experiences.digital_interactive.price,
+          quantity: totalVisitors,
+          total: cost,
+          isOfficial: false,
+          category: 'Experiencias'
+        });
+        totalAmount += cost;
+      }
+
+      // B) En pareja + 3h + arte + interactivos -> Taller creativo Arocena Creative ($180/participante)
+      // O solo 3h con interactivos
+      if ((group === 'pareja' || group === 'solo') && hasInteractive && isExtended) {
+        const participants = group === 'pareja' ? 2 : 1;
+        const cost = participants * PRICE_CATALOG.experiences.creative_workshop.price;
+        lineItems.push({
+          id: PRICE_CATALOG.experiences.creative_workshop.id,
+          name: `${PRICE_CATALOG.experiences.creative_workshop.name} (${participants} part.)`,
+          unitPrice: PRICE_CATALOG.experiences.creative_workshop.price,
+          quantity: participants,
+          total: cost,
+          isOfficial: false,
+          category: 'Experiencias'
+        });
+        totalAmount += cost;
+      }
+
+      // C) Familia + actividades interactivas -> Actividades Arocena Kids ($120/niño)
+      // Se cobra ÚNICAMENTE a los niños, no a los adultos
+      if (group === 'familia' && hasInteractive && visitors.kids > 0) {
+        const cost = visitors.kids * PRICE_CATALOG.experiences.kids_activities.price;
+        lineItems.push({
+          id: PRICE_CATALOG.experiences.kids_activities.id,
+          name: `${PRICE_CATALOG.experiences.kids_activities.name} (${visitors.kids} niño${visitors.kids > 1 ? 's' : ''})`,
+          unitPrice: PRICE_CATALOG.experiences.kids_activities.price,
+          quantity: visitors.kids,
+          total: cost,
+          isOfficial: false,
+          category: 'Experiencias'
+        });
+        totalAmount += cost;
+      }
+
+      // 4. Cálculo final por persona y validación
+      const pricePerPerson = totalVisitors > 0 ? Math.round(totalAmount / totalVisitors) : totalAmount;
+
+      return {
+        totalAmount,
+        pricePerPerson,
+        totalVisitors,
+        visitors,
+        lineItems,
+        isFreeDay
+      };
+    }
+
+    // =========================================================================
+    // 5. ACTUALIZACIÓN VISUAL DE LA COTIZACIÓN & ITINERARIO
+    // =========================================================================
     function updateItineraryView() {
-      const duration = state.duration;
-      const group = state.group;
+      const { duration, group, visitDay } = state;
 
-      // Actualizar badge y textos
+      // Actualizar badge del itinerario
+      const dayText = visitDay === 'free_wed' ? ' • Miércoles Gratis' : (visitDay === 'free_sun' ? ' • Domingo Gratis' : '');
       const badgeText = `${duration === '3' ? '+3' : duration} Horas • ${
         group === 'solo' ? 'Visita Solo' : 
         group === 'pareja' ? 'En Pareja' : 
         group === 'amigos' ? 'Con Amigos' : 'En Familia'
-      }`;
+      }${dayText}`;
       document.getElementById('itinerary-badge').innerText = badgeText;
 
-      // Actualizar precios dinámicos
-      const priceInfo = pricingConfig[group] || pricingConfig.solo;
-      const costPerPerson = priceInfo.basePerPerson;
-      const totalCost = group === 'familia' ? 100 : costPerPerson * priceInfo.count;
-
-      document.getElementById('cost-per-person').innerText = `$${costPerPerson}`;
-      document.getElementById('cost-breakdown-label').innerText = priceInfo.label;
-      document.getElementById('cost-total-group').innerText = `Total: $${totalCost} MXN`;
-      document.getElementById('btn-pay-text').innerText = `Comprar Entradas / Pagar ($${totalCost} MXN)`;
-
-      // Datos para el modal de pago
-      document.getElementById('modal-summary-group').innerText = 
-        group === 'solo' ? 'Visita Solo' : 
-        group === 'pareja' ? 'En Pareja' : 
-        group === 'amigos' ? 'Con Amigos' : 'En Familia';
-      document.getElementById('modal-summary-duration').innerText = `${duration === '3' ? '+3' : duration} Horas sugeridas`;
-      document.getElementById('modal-summary-person').innerText = `$${costPerPerson} MXN`;
-      document.getElementById('modal-summary-total').innerText = `$${totalCost} MXN`;
-
-      // Seleccionar pasos
-      const steps = (itineraryDatabase[duration] && itineraryDatabase[duration][group]) || itineraryDatabase['2']['solo'];
+      // Obtener pasos base del itinerario
+      let steps = (itineraryDatabase[duration] && itineraryDatabase[duration][group]) || itineraryDatabase['2']['solo'];
       
+      // Adaptación de pasos según experiencias detectadas
+      const calculation = calculateSmartPrice(state);
+      const hasDigitalExp = calculation.lineItems.some(i => i.id === 'exp_digital');
+      const hasWorkshopExp = calculation.lineItems.some(i => i.id === 'exp_workshop');
+      const hasKidsExp = calculation.lineItems.some(i => i.id === 'exp_kids');
+
+      // Clonar pasos para inyectar mención de experiencia si aplica
+      steps = steps.map(s => ({ ...s }));
+      if (hasDigitalExp && steps.length > 1) {
+        steps[1].title = 'Exposiciones Contemporáneas + Recorrido Digital';
+        steps[1].desc = 'Instalaciones artísticas con soporte de recorrido interactivo digital.';
+      }
+      if (hasWorkshopExp && steps.length > 2) {
+        steps[2].title = 'Taller Creativo Arocena Creative';
+        steps[2].desc = 'Sesión práctica de técnicas artísticas y producción personal.';
+      }
+      if (hasKidsExp && steps.length > 0) {
+        steps[0].title = 'Detectives del Arte + Retos Infantiles Kids';
+        steps[0].desc = 'Actividad dinámica con material didáctico oficial para niños.';
+      }
+
+      // Renderizar pasos
       const container = document.getElementById('itinerary-steps');
       container.innerHTML = '';
-
-      steps.forEach((step, idx) => {
+      steps.forEach((step) => {
         const stepEl = document.createElement('div');
         stepEl.className = 'relative pl-8 pb-1';
         stepEl.innerHTML = `
@@ -1138,9 +1374,85 @@
         `;
         container.appendChild(stepEl);
       });
+
+      // 6. Actualizar tarjeta de costos
+      document.getElementById('cost-per-person').innerText = `$${calculation.pricePerPerson}`;
+      document.getElementById('cost-total-group').innerText = `Total: $${calculation.totalAmount} MXN`;
+      document.getElementById('btn-pay-text').innerText = `Comprar Entradas / Pagar ($${calculation.totalAmount} MXN)`;
+
+      // Desglose resumido
+      const admissionsCount = calculation.lineItems.filter(i => i.category === 'Entradas').length;
+      const expCount = calculation.lineItems.filter(i => i.category === 'Experiencias').length;
+      let labelSummary = `${calculation.totalVisitors} ${calculation.totalVisitors === 1 ? 'visitante' : 'visitantes'}`;
+      if (calculation.isFreeDay) {
+        labelSummary += ' • Entrada libre';
+      } else {
+        labelSummary += ` • Entradas ($${calculation.lineItems.filter(i => i.category === 'Entradas').reduce((acc, c) => acc + c.total, 0)} MXN)`;
+      }
+      if (expCount > 0) {
+        labelSummary += ` + ${expCount} exp.`;
+      }
+      document.getElementById('cost-breakdown-label').innerText = labelSummary;
+
+      // Lista detallada (para el drawer colapsable)
+      const detailsList = document.getElementById('cost-items-list');
+      detailsList.innerHTML = '';
+      calculation.lineItems.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'flex justify-between items-center py-0.5';
+        row.innerHTML = `
+          <span class="text-carbon/80">${item.name}</span>
+          <span class="font-semibold text-carbon">$${item.total} MXN</span>
+        `;
+        detailsList.appendChild(row);
+      });
+
+      // Actualizar datos del modal de confirmación
+      document.getElementById('modal-summary-day').innerText = 
+        visitDay === 'free_wed' ? 'Miércoles (Entrada Libre)' : 
+        (visitDay === 'free_sun' ? 'Domingo (Entrada Libre)' : 'Día regular');
+
+      document.getElementById('modal-summary-group').innerText = 
+        group === 'solo' ? 'Visita Solo (1 persona)' : 
+        group === 'pareja' ? 'En Pareja (2 adultos)' : 
+        group === 'amigos' ? 'Con Amigos (3 adultos)' : 
+        `En Familia (${calculation.visitors.adults} adultos, ${calculation.visitors.kids} niños)`;
+
+      document.getElementById('modal-summary-duration').innerText = `${duration === '3' ? '+3' : duration} Horas sugeridas`;
+      document.getElementById('modal-summary-person').innerText = `$${calculation.pricePerPerson} MXN`;
+      document.getElementById('modal-summary-total').innerText = `$${calculation.totalAmount} MXN`;
+
+      const modalDetails = document.getElementById('modal-cost-breakdown-list');
+      modalDetails.innerHTML = '';
+      calculation.lineItems.forEach(item => {
+        const itemEl = document.createElement('div');
+        itemEl.className = 'flex justify-between items-center';
+        itemEl.innerHTML = `
+          <span>${item.name}</span>
+          <span class="font-medium">$${item.total} MXN</span>
+        `;
+        modalDetails.appendChild(itemEl);
+      });
     }
 
-    // Eventos Grupo
+    // Toggle drawer detalle de costos
+    const toggleCostDetailsBtn = document.getElementById('toggle-cost-details-btn');
+    const costDetailsDrawer = document.getElementById('cost-details-drawer');
+    toggleCostDetailsBtn.addEventListener('click', () => {
+      const isHidden = costDetailsDrawer.classList.contains('hidden');
+      if (isHidden) {
+        costDetailsDrawer.classList.remove('hidden');
+        toggleCostDetailsBtn.innerText = 'Ocultar detalle de costos';
+      } else {
+        costDetailsDrawer.classList.add('hidden');
+        toggleCostDetailsBtn.innerText = 'Ver detalle de costos';
+      }
+    });
+
+    // ==========================================
+    // 6. EVENTOS DE INTERFAZ
+    // ==========================================
+    // Selector de Grupo
     document.querySelectorAll('.group-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.group-btn').forEach(b => {
@@ -1161,11 +1473,36 @@
         }
 
         state.group = btn.dataset.val;
+
+        // Mostrar / ocultar desglose de familia
+        const familyBreakdown = document.getElementById('family-breakdown');
+        if (state.group === 'familia') {
+          familyBreakdown.classList.remove('hidden');
+        } else {
+          familyBreakdown.classList.add('hidden');
+        }
+
         updateItineraryView();
       });
     });
 
-    // Eventos Duración
+    // Desglose de familia (adultos y niños)
+    document.getElementById('count-adults').addEventListener('change', (e) => {
+      state.counts.adults = parseInt(e.target.value, 10);
+      updateItineraryView();
+    });
+    document.getElementById('count-kids').addEventListener('change', (e) => {
+      state.counts.kids = parseInt(e.target.value, 10);
+      updateItineraryView();
+    });
+
+    // Selector de día de visita
+    document.getElementById('visit-day-select').addEventListener('change', (e) => {
+      state.visitDay = e.target.value;
+      updateItineraryView();
+    });
+
+    // Selector de Duración
     document.querySelectorAll('.dur-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.dur-btn').forEach(b => {
@@ -1190,7 +1527,7 @@
       });
     });
 
-    // Eventos Intereses (Toggle)
+    // Selector de Intereses
     document.querySelectorAll('.int-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const val = btn.dataset.interest;
@@ -1203,27 +1540,49 @@
           btn.classList.remove('border-arena', 'bg-marfil/50', 'text-carbon');
           state.interests.push(val);
         }
+        updateItineraryView();
       });
     });
 
-    // Reset button
+    // Reiniciar selecciones
     document.getElementById('reset-itinerary-btn').addEventListener('click', () => {
       state.group = 'solo';
       state.duration = '2';
       state.interests = ['arte', 'arquitectura'];
+      state.visitDay = 'regular';
+      state.counts = { adults: 1, kids: 0, students: 0 };
 
-      // Resetear botones UI
+      document.getElementById('visit-day-select').value = 'regular';
+      document.getElementById('count-adults').value = '2';
+      document.getElementById('count-kids').value = '2';
+      document.getElementById('family-breakdown').classList.add('hidden');
+
+      // Botones por defecto
       document.querySelector('.group-btn[data-val="solo"]').click();
       document.querySelector('.dur-btn[data-duration="2"]').click();
+
+      // Restaurar intereses por defecto
+      document.querySelectorAll('.int-btn').forEach(b => {
+        const val = b.dataset.interest;
+        if (val === 'arte' || val === 'arquitectura') {
+          b.classList.add('active', 'bg-vino', 'text-white', 'border-vino');
+          b.classList.remove('border-arena', 'bg-marfil/50', 'text-carbon');
+        } else {
+          b.classList.remove('active', 'bg-vino', 'text-white', 'border-vino');
+          b.classList.add('border-arena', 'bg-marfil/50', 'text-carbon');
+        }
+      });
+
       updateItineraryView();
     });
 
     // Botón Guardar / Compartir
     document.getElementById('btn-save-itinerary').addEventListener('click', () => {
-      const summary = `¡Mi plan de visita a VIVE AROCENA!\nDuración: ${state.duration} hrs\nModalidad: ${state.group}\nGenerado en la landing oficial.`;
+      const calculation = calculateSmartPrice(state);
+      const summary = `¡Mi plan de visita a VIVE AROCENA!\nDuración: ${state.duration} hrs\nModalidad: ${state.group}\nTotal estimado: $${calculation.totalAmount} MXN ($${calculation.pricePerPerson} MXN por persona)\nGenerado en la plataforma oficial.`;
       if (navigator.clipboard) {
         navigator.clipboard.writeText(summary).then(() => {
-          alert('¡Itinerario copiado al portapapeles! Puedes compartirlo o pegarlo en tus notas.');
+          alert('¡Itinerario y presupuesto copiado al portapapeles! Puedes compartirlo o guardarlo en tus notas.');
         }).catch(() => {
           alert('Itinerario preparado. ¡Esperamos tu visita en el Museo Arocena!');
         });
@@ -1247,7 +1606,6 @@
       paymentModal.classList.add('hidden');
     });
 
-    // Cerrar al hacer clic fuera del modal
     paymentModal.addEventListener('click', (e) => {
       if (e.target === paymentModal) {
         paymentModal.classList.add('hidden');
@@ -1269,9 +1627,7 @@
 
       const fullName = checkoutForm.querySelector('input[type="text"]').value;
       const email = checkoutForm.querySelector('input[type="email"]').value;
-      const priceInfo = pricingConfig[state.group] || pricingConfig.solo;
-      const costPerPerson = priceInfo.basePerPerson;
-      const totalCost = state.group === 'familia' ? 100 : costPerPerson * priceInfo.count;
+      const calculation = calculateSmartPrice(state);
 
       try {
         if (supabaseClient) {
@@ -1283,8 +1639,8 @@
                 email: email,
                 group_type: state.group,
                 duration: state.duration,
-                cost_per_person: costPerPerson,
-                total_cost: totalCost,
+                cost_per_person: calculation.pricePerPerson,
+                total_cost: calculation.totalAmount,
                 status: 'confirmed'
               }
             ]);
@@ -1302,7 +1658,7 @@
         submitBtn.innerHTML = originalText;
       }
 
-      alert(`¡Reservación confirmada para ${fullName}!\n\nTus entradas digitales y el itinerario personalizado han sido enviados a ${email}. ¡Nos vemos en el Museo Arocena!`);
+      alert(`¡Reservación simulada confirmada para ${fullName}!\n\nTus accesos digitales e itinerario por un total de $${calculation.totalAmount} MXN han sido generados. ¡Nos vemos en el Museo Arocena!`);
       paymentModal.classList.add('hidden');
       checkoutForm.reset();
     });
